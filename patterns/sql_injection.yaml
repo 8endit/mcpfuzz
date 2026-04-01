@@ -1,0 +1,53 @@
+id: sql_injection
+name: SQL Injection
+severity: critical
+description: >
+  Tests whether tools that accept query or data parameters properly
+  sanitize input to prevent SQL injection attacks.
+
+target_params:
+  param_name_patterns:
+    - "query"
+    - "sql"
+    - "search"
+    - "filter"
+    - "where"
+    - "name"
+    - "address"
+    - "value"
+    - "table"
+    - "table_name"
+    - "db_name"
+  param_type: "string"
+
+payloads:
+  - value: "' OR '1'='1"
+    description: "Classic tautology injection"
+    platform: "any"
+  - value: "'; SELECT sqlite_version();--"
+    description: "SQLite version extraction"
+    platform: "any"
+  - value: "test' UNION SELECT sql FROM sqlite_master WHERE type='table'--"
+    description: "Schema extraction via UNION"
+    platform: "any"
+  - value: "Robert'); DROP TABLE students;--"
+    description: "Bobby Tables destructive injection"
+    platform: "any"
+
+detection:
+  response_contains_any:
+    - "syntax error"
+    - "SQLITE_ERROR"
+    - "unrecognized token"
+    - "near \""
+    - "no such table"
+    - "no such column"
+    - "CREATE TABLE"
+    - "sqlite_master"
+    - "3."
+  response_not_contains:
+    - "parameterized"
+    - "sanitized"
+    - "not allowed"
+    - "invalid"
+    - "blocked"

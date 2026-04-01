@@ -20,7 +20,7 @@ def test_load_path_traversal_pattern():
 
 def test_load_all_patterns():
     patterns = load_patterns_dir(PATTERNS_DIR)
-    assert len(patterns) == 7
+    assert len(patterns) == 8
     ids = {p.id for p in patterns}
     assert "path_traversal" in ids
     assert "command_injection" in ids
@@ -29,12 +29,13 @@ def test_load_all_patterns():
     assert "error_leakage" in ids
     assert "resource_exhaustion" in ids
     assert "prompt_injection" in ids
+    assert "sql_injection" in ids
 
 
 def test_registry_load_and_filter():
     reg = PatternRegistry()
     reg.load_from_directory(PATTERNS_DIR)
-    assert len(reg) == 7
+    assert len(reg) == 8
 
     filtered = reg.filter_by_ids(["ssrf", "path_traversal"])
     assert len(filtered) == 2
