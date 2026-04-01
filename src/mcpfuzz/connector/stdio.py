@@ -23,13 +23,29 @@ from mcpfuzz.utils.jsonrpc import make_request, make_notification
 class StdioConnector(BaseConnector):
     """Connect to an MCP server via stdio (subprocess)."""
 
-    def __init__(self, command: str, timeout: float = 5.0):
+    def __init__(self, command: str, timeout: float = 5.0, send_framing: str = "auto"):
+        """
+        Args:
+            command: Shell command to start the MCP server
+            timeout: Timeout per request in seconds
+            send_framing: How to frame outgoing messages:
+                "auto" — try Content-Length first, fall back to newline on error
+                "content-length" — always use Content-Length headers
+                "newline" — always use newline-delimited JSON
+        """
         self._command = command
         self._timeout = timeout
         self._process: asyncio.subprocess.Process | None = None
         self._pending: dict[int, asyncio.Future[dict[str, Any]]] = {}
         self._reader_task: asyncio.Task[None] | None = None
-        self._framing: str = "auto"  # "auto", "content-length", "newline"
+        self._send_framing: str = send_framing  # writing framing
+        # If send framing is explicit, match read framing to it
+        if send_framing == "newline":
+            self._framing = "newline"
+        elif send_framing == "content-length":
+            self._framing = "content-length"
+        else:
+            self._framing = "auto"
 
     async def connect(self) -> None:
         if sys.platform == "win32":
@@ -132,17 +148,27 @@ class StdioConnector(BaseConnector):
                 continue
 
     def _frame_message(self, message: str) -> bytes:
-        """Frame a message for sending.
+        """Frame a message for sending based on send_framing mode.
 
-        Sends Content-Length framing followed by a trailing newline.
-        - Content-Length servers read the header + body, ignore trailing newline
-        - Newline-delimited servers skip the header lines (not valid JSON),
-          then read the JSON body line
-        This makes the same bytes work for both framing modes.
+        Auto mode starts with newline-delimited (works with most servers),
+        then upgrades to Content-Length once we detect the server uses it.
         """
         body = message.encode("utf-8")
-        header = f"Content-Length: {len(body)}\r\n\r\n".encode("utf-8")
-        return header + body + b"\n"
+        if self._send_framing == "content-length":
+            header = f"Content-Length: {len(body)}\r\n\r\n".encode("utf-8")
+            return header + body
+        elif self._send_framing == "newline":
+            return body + b"\n"
+        else:
+            # "auto" — start with newline (safest default, works with custom servers)
+            # Upgrade to Content-Length once we detect server uses it
+            if self._framing == "content-length":
+                # Server responded with Content-Length, match it
+                self._send_framing = "content-length"
+                header = f"Content-Length: {len(body)}\r\n\r\n".encode("utf-8")
+                return header + body
+            else:
+                return body + b"\n"
 
     async def send_request(self, method: str, params: dict[str, Any] | None = None) -> dict[str, Any]:
         assert self._process and self._process.stdin

@@ -85,9 +85,10 @@ servers:
     repo: https://github.com/hannesrudolph/sqlite-explorer-fastmcp-mcp-server
     install: "pip install fastmcp==0.4.1"
     command: "fastmcp run /target/sqlite_explorer.py"
+    framing: newline
     env:
       SQLITE_DB_PATH: "/target/test.db"
-    setup: "python3 -c \"import sqlite3; c=sqlite3.connect('/target/test.db'); c.execute('CREATE TABLE users (id INTEGER, name TEXT)'); c.execute(\\\"INSERT INTO users VALUES (1,'Alice')\\\"); c.commit(); c.close()\""
+    setup: "python3 -c \"import sqlite3; c=sqlite3.connect('/target/test.db'); c.execute('CREATE TABLE IF NOT EXISTS users (id INTEGER, name TEXT)'); c.execute(\\\"INSERT INTO users VALUES (1,'Alice')\\\"); c.commit(); c.close()\""
     category: database
     type: real
     sdk: fastmcp
@@ -96,8 +97,9 @@ servers:
   - id: simonholm-sqlite
     name: SQLite MCP Server (simonholm)
     repo: https://github.com/simonholm/sqlite-mcp-server
-    command: "python /target/sqlite_mcp_server.py /tmp/testdb"
-    setup: "mkdir -p /tmp/testdb && python3 -c \"import sqlite3; c=sqlite3.connect('/tmp/testdb/test.db'); c.execute('CREATE TABLE t (id INTEGER, v TEXT)'); c.commit(); c.close()\""
+    command: "python /target/sqlite_mcp_server.py /target/testdb"
+    framing: newline
+    setup: "mkdir -p /target/testdb && python3 -c \"import sqlite3; c=sqlite3.connect('/target/testdb/test.db'); c.execute('CREATE TABLE IF NOT EXISTS t (id INTEGER, v TEXT)'); c.commit(); c.close()\""
     category: database
     type: real
     sdk: custom
@@ -106,9 +108,11 @@ servers:
   - id: prayanks-sqlite
     name: MCP SQLite Server (prayanks)
     repo: https://github.com/prayanks/mcp-sqlite-server
-    command: "python /target/sqlite_sdio_mcp_server.py"
-    patch: "sed -i 's|/Users/prayank/code/mcp-gpt-implementation/startups.db|/tmp/startups.db|' /target/sqlite_sdio_mcp_server.py"
-    setup: "python3 -c \"import sqlite3; c=sqlite3.connect('/tmp/startups.db'); c.execute('CREATE TABLE startups (id INTEGER, name TEXT, funding REAL)'); c.execute(\\\"INSERT INTO startups VALUES (1,'TestCo',1000000)\\\"); c.commit(); c.close()\""
+    # command disabled — server's DEBUG logging floods stderr and blocks stdio
+    # command: "python /target/sqlite_sdio_mcp_server.py"
+    framing: newline
+    patch: "sed -i 's|/Users/prayank/code/mcp-gpt-implementation/startups.db|/target/startups.db|' /target/sqlite_sdio_mcp_server.py"
+    setup: "python3 -c \"import sqlite3; c=sqlite3.connect('/target/startups.db'); c.execute('CREATE TABLE IF NOT EXISTS startups (id INTEGER, name TEXT, funding REAL)'); c.execute(\\\"INSERT OR IGNORE INTO startups VALUES (1,'TestCo',1000000)\\\"); c.commit(); c.close()\""
     category: database
     type: real
     sdk: mcp_fastmcp
@@ -124,6 +128,7 @@ servers:
     install: "pip install mcp>=1.0"
     command: "python /target/mcp_python_interpreter/server.py --dir /tmp"
     copy_path: "mcp_python_interpreter"
+    framing: newline
     category: code_exec
     type: real
     sdk: mcp_fastmcp

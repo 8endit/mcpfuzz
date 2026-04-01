@@ -37,6 +37,8 @@ def main() -> None:
 @click.option("--format", "output_format", type=click.Choice(["cli", "json", "md"]), default="cli")
 @click.option("--output", "output_path", type=click.Path(), help="Output file path")
 @click.option("--timeout", default=5.0, help="Timeout per tool call in seconds")
+@click.option("--send-framing", type=click.Choice(["auto", "content-length", "newline"]),
+              default="auto", help="Outgoing message framing mode")
 def scan(
     stdio_cmd: str | None,
     http_url: str | None,
@@ -45,6 +47,7 @@ def scan(
     output_format: str,
     output_path: str | None,
     timeout: float,
+    send_framing: str,
 ) -> None:
     """Scan an MCP server for security vulnerabilities."""
     if not stdio_cmd and not http_url and not config_path:
@@ -83,7 +86,7 @@ def scan(
     pattern_names = ", ".join(p.name for p in patterns)
     log.print(f"[dim]Patterns: {pattern_names}[/dim]")
 
-    asyncio.run(_run_scan(stdio_cmd, patterns, output_format, output_path, timeout, log))
+    asyncio.run(_run_scan(stdio_cmd, patterns, output_format, output_path, timeout, log, send_framing))
 
 
 async def _run_scan(
@@ -93,10 +96,11 @@ async def _run_scan(
     output_path: str | None,
     timeout: float,
     log: Console | None = None,
+    send_framing: str = "auto",
 ) -> None:
     assert stdio_cmd
     log = log or console
-    connector = StdioConnector(stdio_cmd, timeout=timeout)
+    connector = StdioConnector(stdio_cmd, timeout=timeout, send_framing=send_framing)
 
     try:
         async with connector:
