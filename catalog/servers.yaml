@@ -1,0 +1,212 @@
+# mcpfuzz Server Catalog
+#
+# Registry of MCP servers to scan, categorized by type.
+# Each entry has enough info to clone, install, and scan automatically.
+#
+# Categories:
+#   filesystem  — File read/write/list operations
+#   database    — SQL queries, DB management
+#   fetch       — HTTP/URL fetching, web scraping
+#   code_exec   — Code execution, REPL, interpreters
+#   git         — Git operations, repo management
+#   search      — Search engines, document retrieval
+#   system      — Shell commands, system info
+#   multi       — Multiple categories combined
+#
+# Types:
+#   real        — Production server, meant to be secure
+#   demo_vuln   — Intentionally vulnerable, for validation only
+#   reference   — Official Anthropic reference server
+#
+# SDK:
+#   mcp_fastmcp — Uses mcp.server.fastmcp (FastMCP bundled in SDK)
+#   fastmcp     — Uses standalone fastmcp package
+#   mcp_low     — Uses low-level mcp.server.Server + stdio_server
+#   custom      — Custom JSON-RPC implementation
+#   node        — Node.js/TypeScript server
+
+servers:
+
+  # ============================================================
+  # REFERENCE SERVERS (Official Anthropic)
+  # ============================================================
+
+  - id: official-filesystem
+    name: "@modelcontextprotocol/server-filesystem"
+    repo: npm
+    install: "npm install -g @modelcontextprotocol/server-filesystem"
+    command: "mcp-server-filesystem /tmp"
+    category: filesystem
+    type: reference
+    sdk: node
+    stars: 14000
+    notes: "Official filesystem server with path validation"
+
+  - id: official-memory
+    name: "@modelcontextprotocol/server-memory"
+    repo: npm
+    install: "npm install -g @modelcontextprotocol/server-memory"
+    command: "mcp-server-memory"
+    category: database
+    type: reference
+    sdk: node
+    stars: 14000
+
+  - id: official-everything
+    name: "@modelcontextprotocol/server-everything"
+    repo: npm
+    install: "npm install -g @modelcontextprotocol/server-everything"
+    command: "mcp-server-everything"
+    category: multi
+    type: reference
+    sdk: node
+    stars: 14000
+    notes: "Test/demo server, echo tools expected to show prompt injection"
+
+  # ============================================================
+  # REAL SERVERS — Filesystem
+  # ============================================================
+
+  - id: desktop-commander
+    name: Desktop Commander
+    repo: https://github.com/wonderwhy-er/DesktopCommanderMCP
+    category: [filesystem, system]
+    type: real
+    sdk: node
+    stars: 3500
+    notes: "Terminal + file ops for Claude Desktop. Very popular."
+
+  # ============================================================
+  # REAL SERVERS — Database
+  # ============================================================
+
+  - id: sqlite-explorer
+    name: SQLite Explorer
+    repo: https://github.com/hannesrudolph/sqlite-explorer-fastmcp-mcp-server
+    install: "pip install fastmcp==0.4.1"
+    command: "fastmcp run /target/sqlite_explorer.py"
+    env:
+      SQLITE_DB_PATH: "/target/test.db"
+    setup: "python3 -c \"import sqlite3; c=sqlite3.connect('/target/test.db'); c.execute('CREATE TABLE users (id INTEGER, name TEXT)'); c.execute(\\\"INSERT INTO users VALUES (1,'Alice')\\\"); c.commit(); c.close()\""
+    category: database
+    type: real
+    sdk: fastmcp
+    stars: 30
+
+  - id: simonholm-sqlite
+    name: SQLite MCP Server (simonholm)
+    repo: https://github.com/simonholm/sqlite-mcp-server
+    command: "python /target/sqlite_mcp_server.py /tmp/testdb"
+    setup: "mkdir -p /tmp/testdb && python3 -c \"import sqlite3; c=sqlite3.connect('/tmp/testdb/test.db'); c.execute('CREATE TABLE t (id INTEGER, v TEXT)'); c.commit(); c.close()\""
+    category: database
+    type: real
+    sdk: custom
+    stars: 15
+
+  - id: prayanks-sqlite
+    name: MCP SQLite Server (prayanks)
+    repo: https://github.com/prayanks/mcp-sqlite-server
+    command: "python /target/sqlite_sdio_mcp_server.py"
+    patch: "sed -i 's|/Users/prayank/code/mcp-gpt-implementation/startups.db|/tmp/startups.db|' /target/sqlite_sdio_mcp_server.py"
+    setup: "python3 -c \"import sqlite3; c=sqlite3.connect('/tmp/startups.db'); c.execute('CREATE TABLE startups (id INTEGER, name TEXT, funding REAL)'); c.execute(\\\"INSERT INTO startups VALUES (1,'TestCo',1000000)\\\"); c.commit(); c.close()\""
+    category: database
+    type: real
+    sdk: mcp_fastmcp
+    stars: 10
+
+  # ============================================================
+  # REAL SERVERS — Code Execution
+  # ============================================================
+
+  - id: yzfly-python-interpreter
+    name: MCP Python Interpreter
+    repo: https://github.com/yzfly/mcp-python-interpreter
+    install: "pip install mcp>=1.0"
+    command: "python /target/mcp_python_interpreter/server.py --dir /tmp"
+    copy_path: "mcp_python_interpreter"
+    category: code_exec
+    type: real
+    sdk: mcp_fastmcp
+    stars: 90
+    notes: "KNOWN VULN: Path traversal on read_file (disclosed)"
+
+  # ============================================================
+  # REAL SERVERS — Fetch / Web
+  # ============================================================
+
+  - id: duckduckgo-search
+    name: DuckDuckGo Search MCP
+    repo: https://github.com/nickclyde/duckduckgo-mcp-server
+    category: fetch
+    type: real
+    sdk: mcp_fastmcp
+    stars: 200
+
+  - id: firecrawl-mcp
+    name: Firecrawl MCP
+    repo: https://github.com/mendableai/firecrawl-mcp-server
+    category: fetch
+    type: real
+    sdk: node
+    stars: 2400
+
+  # ============================================================
+  # REAL SERVERS — Git
+  # ============================================================
+
+  - id: git-mcp
+    name: Git MCP Server
+    repo: https://github.com/cyanheads/git-mcp-server
+    category: git
+    type: real
+    sdk: node
+    stars: 500
+    notes: "CVE-2025-53107: command injection in several tools"
+
+  # ============================================================
+  # REAL SERVERS — Search / Documents
+  # ============================================================
+
+  - id: markitdown-mcp
+    name: MarkItDown MCP
+    repo: https://github.com/microsoft/markitdown
+    category: search
+    type: real
+    sdk: mcp_fastmcp
+    stars: 5000
+    notes: "Microsoft's document converter with MCP server"
+
+  # ============================================================
+  # VALIDATION TARGETS (Intentionally vulnerable — not real findings)
+  # ============================================================
+
+  - id: eliran79-file-reader
+    name: Vulnerable File Reader
+    repo: https://github.com/Eliran79/Vulnerable-file-reader-server
+    command: "python /target/main.py"
+    setup: "mkdir -p /tmp/safe && echo 'test' > /tmp/safe/test.txt"
+    category: filesystem
+    type: demo_vuln
+    sdk: mcp_fastmcp
+    stars: 5
+    notes: "Deliberate command injection via shell=True in cat"
+
+  - id: kenhuangus-vuln
+    name: Vulnerable MCP Server Demo
+    repo: https://github.com/kenhuangus/mcp-vulnerable-server-demo
+    command: "python /target/vuln-mcp.py"
+    patch: "sed -i 's|DB_NAME = \"vulnerable_mcp.db\"|DB_NAME = \"/tmp/vulnerable_mcp.db\"|' /target/vuln-mcp.py"
+    category: database
+    type: demo_vuln
+    sdk: mcp_fastmcp
+    stars: 10
+    notes: "Deliberate SQL injection, arbitrary SQL exec, env var exposure"
+
+  - id: dvmcp
+    name: Damn Vulnerable MCP Server
+    repo: https://github.com/harishsg993010/damn-vulnerable-MCP-server
+    category: multi
+    type: demo_vuln
+    sdk: mcp_fastmcp
+    stars: 50
+    notes: "10 security challenges. Uses SSE transport, not stdio."
