@@ -1,0 +1,53 @@
+id: ssrf
+name: SSRF (Server-Side Request Forgery)
+severity: critical
+description: >
+  Tests whether tools that accept URLs properly validate them to prevent
+  requests to internal services and cloud metadata endpoints.
+
+target_params:
+  param_name_patterns:
+    - "url"
+    - "uri"
+    - "endpoint"
+    - "target"
+    - "link"
+    - "href"
+    - "source"
+    - "webhook"
+  param_type: "string"
+
+payloads:
+  - value: "http://169.254.169.254/latest/meta-data/"
+    description: "AWS metadata endpoint"
+    platform: "any"
+  - value: "http://127.0.0.1:22"
+    description: "Localhost SSH port probe"
+    platform: "any"
+  - value: "http://[::1]/"
+    description: "IPv6 localhost"
+    platform: "any"
+  - value: "http://0x7f000001/"
+    description: "Hex-encoded localhost"
+    platform: "any"
+  - value: "http://192.168.1.1/"
+    description: "Private network range"
+    platform: "any"
+  - value: "http://10.0.0.1/"
+    description: "Internal network range"
+    platform: "any"
+
+detection:
+  response_contains_any:
+    - "ami-"
+    - "instance-id"
+    - "SSH"
+    - "OpenSSH"
+    - "<!DOCTYPE"
+    - "<html"
+  response_not_contains:
+    - "not allowed"
+    - "denied"
+    - "error"
+    - "private"
+    - "blocked"

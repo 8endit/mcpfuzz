@@ -1,0 +1,23 @@
+FROM python:3.12-slim
+
+# Install Node.js for TypeScript/JS MCP servers
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    nodejs npm \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Install mcpfuzz
+COPY pyproject.toml LICENSE ./
+COPY src/ src/
+COPY patterns/ patterns/
+COPY tests/ tests/
+COPY demo_servers/ demo_servers/
+
+RUN pip install --no-cache-dir -e ".[dev]"
+
+# Non-root user
+RUN useradd --create-home --shell /bin/bash fuzzer
+USER fuzzer
+
+ENTRYPOINT ["mcpfuzz"]

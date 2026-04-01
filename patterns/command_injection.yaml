@@ -1,0 +1,43 @@
+id: command_injection
+name: Command Injection
+severity: critical
+description: >
+  Tests whether tools that accept string parameters properly sanitize
+  input to prevent shell command injection.
+
+target_params:
+  param_name_patterns:
+    - "cmd"
+    - "command"
+    - "exec"
+    - "run"
+    - "shell"
+    - "script"
+    - "query"
+  param_type: "string"
+
+payloads:
+  - value: "echo hello; echo MCPPROBE_INJECT_MARKER"
+    description: "Semicolon injection with marker"
+    platform: "any"
+  - value: "echo hello && echo MCPPROBE_INJECT_MARKER"
+    description: "AND injection with marker"
+    platform: "any"
+  - value: "echo hello | echo MCPPROBE_INJECT_MARKER"
+    description: "Pipe injection with marker"
+    platform: "any"
+  - value: "echo $(echo MCPPROBE_INJECT_MARKER)"
+    description: "Command substitution injection"
+    platform: "unix"
+  - value: "echo `echo MCPPROBE_INJECT_MARKER`"
+    description: "Backtick injection"
+    platform: "unix"
+
+detection:
+  response_contains_any:
+    - "MCPPROBE_INJECT_MARKER"
+  response_not_contains:
+    - "not allowed"
+    - "invalid"
+    - "denied"
+    - "error"

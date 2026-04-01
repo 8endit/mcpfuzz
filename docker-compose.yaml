@@ -1,0 +1,115 @@
+services:
+  mcpfuzz:
+    build: .
+    network_mode: "none"
+    read_only: true
+    tmpfs:
+      - /tmp:size=50m,noexec,nosuid
+      - /home/fuzzer/.cache:size=20m,noexec,nosuid
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 256m
+    cpus: "1.0"
+    pids_limit: 50
+    volumes:
+      - ./demo_servers:/app/demo_servers:ro
+      - ./patterns:/app/patterns:ro
+
+  # Convenience: run tests inside container
+  test:
+    build: .
+    entrypoint: ["python", "-m", "pytest", "tests/", "-v"]
+    network_mode: "none"
+    read_only: true
+    tmpfs:
+      - /tmp:size=50m,noexec,nosuid
+      - /home/fuzzer/.cache:size=20m,noexec,nosuid
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 256m
+
+  # Scan the vulnerable demo server (safe — isolated)
+  scan-vulnerable:
+    build: .
+    command: ["scan", "--stdio", "python demo_servers/vulnerable_server.py", "--timeout", "10"]
+    network_mode: "none"
+    read_only: true
+    tmpfs:
+      - /tmp:size=50m,noexec,nosuid
+      - /home/fuzzer/.cache:size=20m,noexec,nosuid
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 256m
+
+  # Scan the secure demo server
+  scan-secure:
+    build: .
+    command: ["scan", "--stdio", "python demo_servers/secure_server.py", "--timeout", "10"]
+    network_mode: "none"
+    read_only: true
+    tmpfs:
+      - /tmp:size=50m,noexec,nosuid
+      - /home/fuzzer/.cache:size=20m,noexec,nosuid
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 256m
+
+  # ============================================================
+  # UNTRUSTED SERVER SCANNING — maximum isolation
+  # ============================================================
+  # Usage:
+  #   ./scan_untrusted.sh /path/to/cloned/server "python server.py"
+  #
+  # Or manually:
+  #   docker compose run --rm \
+  #     -v /path/to/server:/target:ro \
+  #     scan-untrusted \
+  #     scan --stdio "python /target/server.py" --format json --timeout 10
+  scan-untrusted:
+    build:
+      context: .
+      dockerfile: Dockerfile.scan
+    # --- Network ---
+    network_mode: "none"                    # No network stack at all
+    # --- Filesystem ---
+    read_only: true                         # Root filesystem read-only
+    tmpfs:
+      - /tmp:size=30m,noexec,nosuid,nodev   # Small writable /tmp, no exec
+      - /home/fuzzer/.cache:size=10m,noexec,nosuid,nodev
+    # --- Capabilities ---
+    cap_drop:
+      - ALL                                 # Drop every Linux capability
+    security_opt:
+      - no-new-privileges:true              # No setuid/setgid escalation
+    # --- Resources ---
+    mem_limit: 128m                         # Tight memory limit
+    cpus: "0.5"                             # Half a CPU core max
+    pids_limit: 30                          # Max 30 processes
+    # --- Timeouts ---
+    stop_grace_period: 15s                  # Force-kill after 15s if stuck
+    # Target server mount — override via -v on docker compose run
+    volumes:
+      - ./demo_servers:/target:ro           # Default; override with -v for real targets
+
+  # Scan a custom server (less hardened, for trusted/own servers)
+  scan-custom:
+    build: .
+    network_mode: "none"
+    read_only: true
+    tmpfs:
+      - /tmp:size=50m,noexec,nosuid
+      - /home/fuzzer/.cache:size=20m,noexec,nosuid
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 256m
+    pids_limit: 50

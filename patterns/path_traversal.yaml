@@ -1,0 +1,49 @@
+id: path_traversal
+name: Path Traversal
+severity: critical
+description: >
+  Tests whether tools that accept file paths properly sanitize input
+  to prevent directory traversal attacks.
+
+target_params:
+  param_name_patterns:
+    - "path"
+    - "file"
+    - "filename"
+    - "filepath"
+    - "directory"
+    - "dir"
+    - "location"
+  param_type: "string"
+
+payloads:
+  - value: "../../../etc/passwd"
+    description: "Unix passwd file traversal"
+    platform: "unix"
+  - value: "..\\..\\..\\windows\\system32\\drivers\\etc\\hosts"
+    description: "Windows hosts file traversal"
+    platform: "windows"
+  - value: "/etc/shadow"
+    description: "Direct absolute path access"
+    platform: "unix"
+  - value: "....//....//etc/passwd"
+    description: "Double-encoding bypass"
+    platform: "unix"
+  - value: "%2e%2e%2f%2e%2e%2fetc%2fpasswd"
+    description: "URL-encoded traversal"
+    platform: "unix"
+
+detection:
+  response_contains_any:
+    - "root:"
+    - "daemon:"
+    - "[boot loader]"
+    - "# Copyright"
+    - "localhost"
+    - "127.0.0.1"
+  response_not_contains:
+    - "error"
+    - "denied"
+    - "not allowed"
+    - "invalid path"
+    - "outside"
