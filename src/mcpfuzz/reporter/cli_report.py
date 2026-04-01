@@ -66,6 +66,28 @@ def print_report(report: ScanReport, console: Console | None = None) -> None:
 
     console.print(table)
 
+    # Broken promises section
+    broken = [r for r in report.results if r.evidence.get("broken_promise")]
+    if broken:
+        console.print()
+        console.print("[red bold]BROKEN SECURITY PROMISES[/red bold]")
+        for r in broken:
+            bp = r.evidence["broken_promise"]
+            console.print(
+                f"  [red]Server claimed:[/red] \"{bp.get('promised', '?')}\" "
+                f"[dim]({bp.get('claim_type', '?')})[/dim]"
+            )
+            console.print(
+                f"  [red]Reality:[/red] {r.pattern_name} succeeded on [bold]{r.tool_name}[/bold]"
+            )
+            console.print()
+    elif report.promise_analysis.promises:
+        console.print()
+        console.print(
+            f"[green]Security promises detected: {len(report.promise_analysis.promises)} — "
+            f"all held.[/green]"
+        )
+
     # Summary
     console.print()
     summary_parts = [f"Score: {passed}/{total}"]
@@ -75,5 +97,7 @@ def print_report(report: ScanReport, console: Console | None = None) -> None:
         summary_parts.append(f"[red]{report.failed - report.critical_fails} HIGH/MED fails[/red]")
     if report.warnings:
         summary_parts.append(f"[yellow]{report.warnings} WARN[/yellow]")
+    if broken:
+        summary_parts.append(f"[red bold]{len(broken)} BROKEN PROMISES[/red bold]")
     console.print(" | ".join(summary_parts))
     console.print()

@@ -27,6 +27,27 @@ def generate_json(report: ScanReport) -> str:
             }
             for r in report.results
         ],
+        "promises": {
+            "detected": len(report.promise_analysis.promises),
+            "claims": [
+                {
+                    "type": p.claim_type,
+                    "source": p.source,
+                    "text": p.text,
+                    "tool": p.tool_name,
+                }
+                for p in report.promise_analysis.promises
+            ],
+            "broken": [
+                {
+                    "tool": r.tool_name,
+                    "pattern": r.pattern_id,
+                    "promise": r.evidence.get("broken_promise", {}),
+                }
+                for r in report.results
+                if r.evidence.get("broken_promise")
+            ],
+        },
         "score": {
             "total": total,
             "passed": passed,

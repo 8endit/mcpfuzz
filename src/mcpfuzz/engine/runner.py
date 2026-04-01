@@ -10,6 +10,7 @@ from typing import Any
 
 from mcpfuzz.connector.base import BaseConnector
 from mcpfuzz.engine.matcher import match_tool_to_patterns, find_matching_params
+from mcpfuzz.engine.promises import PromiseAnalysis, analyze_promises, check_broken_promises
 from mcpfuzz.patterns.loader import Pattern, Payload
 from mcpfuzz.utils.jsonrpc import ToolInfo
 
@@ -32,6 +33,7 @@ class ScanReport:
     tools_discovered: int = 0
     tools: list[ToolInfo] = field(default_factory=list)
     results: list[TestResult] = field(default_factory=list)
+    promise_analysis: PromiseAnalysis = field(default_factory=PromiseAnalysis)
 
     @property
     def passed(self) -> int:
@@ -65,17 +67,31 @@ async def run_scan(
     """Run all applicable patterns against all discovered tools."""
     from datetime import datetime, timezone
 
+    # Analyze security promises from tool descriptions
+    promise_analysis = analyze_promises(tools, server_name=target_name)
+
     report = ScanReport(
         target=target_name,
         timestamp=datetime.now(timezone.utc).isoformat(),
         tools_discovered=len(tools),
         tools=tools,
+        promise_analysis=promise_analysis,
     )
 
     for tool in tools:
         matched_patterns = match_tool_to_patterns(tool, patterns)
         for pattern in matched_patterns:
             result = await _run_pattern_against_tool(connector, tool, pattern, timeout)
+
+            # Check if a failure breaks a security promise
+            if result.status == "fail":
+                broken = check_broken_promises(
+                    pattern.id, tool.name, True, promise_analysis,
+                )
+                if broken:
+                    result.evidence["broken_promise"] = broken
+                    result.detail = f"BROKEN PROMISE: {result.detail}"
+
             report.results.append(result)
 
     return report
