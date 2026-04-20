@@ -1,6 +1,6 @@
 {
   "target": "mcp-alchemy",
-  "timestamp": "2026-04-20T10:07:03.272761+00:00",
+  "timestamp": "2026-04-20T10:45:42.692722+00:00",
   "tools_discovered": 4,
   "results": [
     {
@@ -94,21 +94,9 @@
       "pattern_name": "Command Injection",
       "tool": "execute_query",
       "severity": "critical",
-      "status": "warn",
-      "detail": "Potential issues detected (9 indicators)",
-      "evidence": {
-        "warnings": [
-          "Semicolon injection with marker: Error: (sqlite3.OperationalError) near \"echo\": syntax error\n[SQL: echo hello; echo MCPFUZZ_INJECT_MARKER]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-          "AND injection with marker: Error: (sqlite3.OperationalError) near \"echo\": syntax error\n[SQL: echo hello && echo MCPFUZZ_INJECT_MARKER]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-          "Pipe injection with marker: Error: (sqlite3.OperationalError) near \"echo\": syntax error\n[SQL: echo hello | echo MCPFUZZ_INJECT_MARKER]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-          "Command substitution injection: Error: (sqlite3.OperationalError) near \"echo\": syntax error\n[SQL: echo $(echo MCPFUZZ_INJECT_MARKER)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-          "Backtick injection: Error: (sqlite3.OperationalError) near \"echo\": syntax error\n[SQL: echo `echo MCPFUZZ_INJECT_MARKER`]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-          "Path with semicolon injection: Error: (sqlite3.OperationalError) near \"/\": syntax error\n[SQL: /tmp/safe/test.txt; echo MCPFUZZ_INJECT_MARKER]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-          "Path with AND injection: Error: (sqlite3.OperationalError) near \"/\": syntax error\n[SQL: /tmp/test.txt && echo MCPFUZZ_INJECT_MARKER]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-          "Filename with command substitution: Error: (sqlite3.OperationalError) near \"test\": syntax error\n[SQL: test.txt$(echo MCPFUZZ_INJECT_MARKER)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-          "Filename with pipe injection: Error: (sqlite3.OperationalError) near \"test\": syntax error\n[SQL: test.txt|echo MCPFUZZ_INJECT_MARKER]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-        ]
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "error_leakage",
@@ -161,14 +149,9 @@
       "pattern_name": "SQL Injection",
       "tool": "execute_query",
       "severity": "critical",
-      "status": "fail",
-      "detail": "Vulnerable: Classic tautology injection",
-      "evidence": {
-        "input": "' OR '1'='1",
-        "param": "query",
-        "payload_desc": "Classic tautology injection",
-        "output_snippet": "Error: (sqlite3.OperationalError) near \"' OR '\": syntax error\n[SQL: ' OR '1'='1]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     }
   ],
   "promises": {
@@ -178,9 +161,9 @@
   },
   "score": {
     "total": 15,
-    "passed": 10,
-    "failed": 4,
-    "warnings": 1,
-    "critical_fails": 1
+    "passed": 12,
+    "failed": 3,
+    "warnings": 0,
+    "critical_fails": 0
   }
 }

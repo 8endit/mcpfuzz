@@ -1,6 +1,6 @@
 {
   "target": "mcp-pandoc",
-  "timestamp": "2026-04-20T10:06:48.368711+00:00",
+  "timestamp": "2026-04-20T10:45:44.214678+00:00",
   "tools_discovered": 1,
   "results": [
     {
@@ -8,21 +8,9 @@
       "pattern_name": "Command Injection",
       "tool": "convert-contents",
       "severity": "critical",
-      "status": "warn",
-      "detail": "Potential issues detected (9 indicators)",
-      "evidence": {
-        "warnings": [
-          "Semicolon injection with marker: Error converting file from markdown to markdown: Input file not found: echo hello; echo MCPFUZZ_INJECT_MARKER",
-          "AND injection with marker: Error converting file from markdown to markdown: Input file not found: echo hello && echo MCPFUZZ_INJECT_MARKER",
-          "Pipe injection with marker: Error converting file from markdown to markdown: Input file not found: echo hello | echo MCPFUZZ_INJECT_MARKER",
-          "Command substitution injection: Error converting file from markdown to markdown: Input file not found: echo $(echo MCPFUZZ_INJECT_MARKER)",
-          "Backtick injection: Error converting file from markdown to markdown: Input file not found: echo `echo MCPFUZZ_INJECT_MARKER`",
-          "Path with semicolon injection: Error converting file from markdown to markdown: Input file not found: /tmp/safe/test.txt; echo MCPFUZZ_INJECT_MARKER",
-          "Path with AND injection: Error converting file from markdown to markdown: Input file not found: /tmp/test.txt && echo MCPFUZZ_INJECT_MARKER",
-          "Filename with command substitution: Error converting file from markdown to markdown: Input file not found: test.txt$(echo MCPFUZZ_INJECT_MARKER)",
-          "Filename with pipe injection: Error converting file from markdown to markdown: Input file not found: test.txt|echo MCPFUZZ_INJECT_MARKER"
-        ]
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "error_leakage",
@@ -82,9 +70,9 @@
   },
   "score": {
     "total": 6,
-    "passed": 4,
+    "passed": 5,
     "failed": 1,
-    "warnings": 1,
+    "warnings": 0,
     "critical_fails": 0
   }
 }

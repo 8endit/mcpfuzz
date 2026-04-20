@@ -261,6 +261,45 @@ servers:
     notes: "Go implementation of filesystem MCP — different ecosystem"
 
   # ============================================================
+  # REAL SERVERS — Third batch (FP-fix validation, 2026-04-20)
+  # ============================================================
+
+  - id: official-time-python
+    name: "mcp-server-time (official Anthropic)"
+    repo: https://github.com/modelcontextprotocol/servers
+    install: "pip install mcp-server-time"
+    command: "mcp-server-time"
+    copy_path: "src/time"
+    category: system
+    type: reference
+    sdk: mcp_low
+    stars: 50000
+    notes: "Official Anthropic time / timezone MCP"
+
+  - id: official-sqlite-python
+    name: "mcp-server-sqlite (official Anthropic)"
+    repo: https://github.com/modelcontextprotocol/servers-archived
+    install: "pip install mcp-server-sqlite"
+    command: "mcp-server-sqlite --db-path /target/sqlite.db"
+    setup: "python3 -c \"import sqlite3; c=sqlite3.connect('/target/sqlite.db'); c.execute('CREATE TABLE users (id INTEGER, name TEXT, email TEXT)'); c.execute(\\\"INSERT INTO users VALUES (1,'Alice','a@b.com')\\\"); c.commit(); c.close()\""
+    category: database
+    type: reference
+    sdk: mcp_low
+    stars: 50000
+    notes: "Official Anthropic SQLite MCP (archived repo)"
+
+  - id: official-sequential-thinking
+    name: "@modelcontextprotocol/server-sequential-thinking"
+    repo: npm
+    install: "npm install -g @modelcontextprotocol/server-sequential-thinking"
+    command: "mcp-server-sequential-thinking"
+    category: system
+    type: reference
+    sdk: node
+    stars: 50000
+    notes: "Official Anthropic reasoning MCP — TypeScript"
+
+  # ============================================================
   # VALIDATION TARGETS (Intentionally vulnerable — not real findings)
   # ============================================================
 

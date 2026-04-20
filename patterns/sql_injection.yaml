@@ -35,19 +35,26 @@ payloads:
     platform: "any"
 
 detection:
+  # Only schema-disclosure / successful-execution markers. Pure parser
+  # errors are NOT treated as positive — many tools legitimately accept
+  # free-form SQL and a syntax error there is expected behaviour.
+  # "CREATE TABLE" on its own is too weak (appears in rejection messages
+  # like "Only CREATE TABLE statements are allowed"), so the positives
+  # require a real schema-catalog name to be present.
   response_contains_any:
-    - "syntax error"
-    - "SQLITE_ERROR"
-    - "unrecognized token"
-    - "near \""
     - "no such table"
     - "no such column"
-    - "CREATE TABLE"
     - "sqlite_master"
-    - "3."
+    - "information_schema"
+    - "pg_catalog"
   response_not_contains:
     - "parameterized"
     - "sanitized"
     - "not allowed"
     - "invalid"
     - "blocked"
+    - "rejected"
+    - "syntax error"
+    - "unrecognized token"
+    - 'near "'
+    - "are allowed"

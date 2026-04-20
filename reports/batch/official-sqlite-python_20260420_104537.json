@@ -1,0 +1,281 @@
+{
+  "target": "mcp-server-sqlite --db-path /tmp/fixtures/official-sqlite.db",
+  "timestamp": "2026-04-20T10:46:27.203103+00:00",
+  "tools_discovered": 6,
+  "results": [
+    {
+      "pattern": "command_injection",
+      "pattern_name": "Command Injection",
+      "tool": "read_query",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "error_leakage",
+      "pattern_name": "Error Information Leakage",
+      "tool": "read_query",
+      "severity": "high",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "input_validation",
+      "pattern_name": "Input Validation",
+      "tool": "read_query",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "prompt_injection",
+      "pattern_name": "Prompt Injection in Responses",
+      "tool": "read_query",
+      "severity": "high",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "resource_exhaustion",
+      "pattern_name": "Resource Exhaustion",
+      "tool": "read_query",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "sql_injection",
+      "pattern_name": "SQL Injection",
+      "tool": "read_query",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "command_injection",
+      "pattern_name": "Command Injection",
+      "tool": "write_query",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "error_leakage",
+      "pattern_name": "Error Information Leakage",
+      "tool": "write_query",
+      "severity": "high",
+      "status": "fail",
+      "detail": "Vulnerable: Template injection probe",
+      "evidence": {
+        "input": "{{invalid}}",
+        "param": "query",
+        "payload_desc": "Template injection probe",
+        "output_snippet": "Database error: unrecognized token: \"{\""
+      }
+    },
+    {
+      "pattern": "input_validation",
+      "pattern_name": "Input Validation",
+      "tool": "write_query",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "prompt_injection",
+      "pattern_name": "Prompt Injection in Responses",
+      "tool": "write_query",
+      "severity": "high",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "resource_exhaustion",
+      "pattern_name": "Resource Exhaustion",
+      "tool": "write_query",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "sql_injection",
+      "pattern_name": "SQL Injection",
+      "tool": "write_query",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "command_injection",
+      "pattern_name": "Command Injection",
+      "tool": "create_table",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "error_leakage",
+      "pattern_name": "Error Information Leakage",
+      "tool": "create_table",
+      "severity": "high",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "input_validation",
+      "pattern_name": "Input Validation",
+      "tool": "create_table",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "prompt_injection",
+      "pattern_name": "Prompt Injection in Responses",
+      "tool": "create_table",
+      "severity": "high",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "resource_exhaustion",
+      "pattern_name": "Resource Exhaustion",
+      "tool": "create_table",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "sql_injection",
+      "pattern_name": "SQL Injection",
+      "tool": "create_table",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "error_leakage",
+      "pattern_name": "Error Information Leakage",
+      "tool": "list_tables",
+      "severity": "high",
+      "status": "pass",
+      "detail": "No matching parameters found \u2014 pattern not applicable.",
+      "evidence": {}
+    },
+    {
+      "pattern": "input_validation",
+      "pattern_name": "Input Validation",
+      "tool": "list_tables",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "No matching parameters found \u2014 pattern not applicable.",
+      "evidence": {}
+    },
+    {
+      "pattern": "resource_exhaustion",
+      "pattern_name": "Resource Exhaustion",
+      "tool": "list_tables",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "No matching parameters found \u2014 pattern not applicable.",
+      "evidence": {}
+    },
+    {
+      "pattern": "error_leakage",
+      "pattern_name": "Error Information Leakage",
+      "tool": "describe_table",
+      "severity": "high",
+      "status": "fail",
+      "detail": "Vulnerable: Template injection probe",
+      "evidence": {
+        "input": "{{invalid}}",
+        "param": "table_name",
+        "payload_desc": "Template injection probe",
+        "output_snippet": "Database error: unrecognized token: \"{\""
+      }
+    },
+    {
+      "pattern": "input_validation",
+      "pattern_name": "Input Validation",
+      "tool": "describe_table",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "resource_exhaustion",
+      "pattern_name": "Resource Exhaustion",
+      "tool": "describe_table",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "sql_injection",
+      "pattern_name": "SQL Injection",
+      "tool": "describe_table",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "error_leakage",
+      "pattern_name": "Error Information Leakage",
+      "tool": "append_insight",
+      "severity": "high",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "input_validation",
+      "pattern_name": "Input Validation",
+      "tool": "append_insight",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "resource_exhaustion",
+      "pattern_name": "Resource Exhaustion",
+      "tool": "append_insight",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    }
+  ],
+  "promises": {
+    "detected": 0,
+    "claims": [],
+    "broken": []
+  },
+  "score": {
+    "total": 28,
+    "passed": 26,
+    "failed": 2,
+    "warnings": 0,
+    "critical_fails": 0
+  }
+}

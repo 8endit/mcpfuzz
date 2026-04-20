@@ -1,6 +1,6 @@
 {
   "target": "mcp-server-git --repository /tmp/fixtures/testrepo",
-  "timestamp": "2026-04-20T10:06:42.344750+00:00",
+  "timestamp": "2026-04-20T10:45:38.482749+00:00",
   "tools_discovered": 12,
   "results": [
     {
@@ -8,14 +8,9 @@
       "pattern_name": "Command Injection",
       "tool": "git_status",
       "severity": "critical",
-      "status": "fail",
-      "detail": "Vulnerable: Semicolon injection with marker",
-      "evidence": {
-        "input": "echo hello; echo MCPFUZZ_INJECT_MARKER",
-        "param": "repo_path",
-        "payload_desc": "Semicolon injection with marker",
-        "output_snippet": "Repository path 'echo hello; echo MCPFUZZ_INJECT_MARKER' is outside the allowed repository '/tmp/fixtures/testrepo'"
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "error_leakage",
@@ -58,14 +53,9 @@
       "pattern_name": "Command Injection",
       "tool": "git_diff_unstaged",
       "severity": "critical",
-      "status": "fail",
-      "detail": "Vulnerable: Semicolon injection with marker",
-      "evidence": {
-        "input": "echo hello; echo MCPFUZZ_INJECT_MARKER",
-        "param": "repo_path",
-        "payload_desc": "Semicolon injection with marker",
-        "output_snippet": "Repository path 'echo hello; echo MCPFUZZ_INJECT_MARKER' is outside the allowed repository '/tmp/fixtures/testrepo'"
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "error_leakage",
@@ -108,14 +98,9 @@
       "pattern_name": "Command Injection",
       "tool": "git_diff_staged",
       "severity": "critical",
-      "status": "fail",
-      "detail": "Vulnerable: Semicolon injection with marker",
-      "evidence": {
-        "input": "echo hello; echo MCPFUZZ_INJECT_MARKER",
-        "param": "repo_path",
-        "payload_desc": "Semicolon injection with marker",
-        "output_snippet": "Repository path 'echo hello; echo MCPFUZZ_INJECT_MARKER' is outside the allowed repository '/tmp/fixtures/testrepo'"
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "error_leakage",
@@ -158,14 +143,9 @@
       "pattern_name": "Command Injection",
       "tool": "git_diff",
       "severity": "critical",
-      "status": "fail",
-      "detail": "Vulnerable: Semicolon injection with marker",
-      "evidence": {
-        "input": "echo hello; echo MCPFUZZ_INJECT_MARKER",
-        "param": "repo_path",
-        "payload_desc": "Semicolon injection with marker",
-        "output_snippet": "Repository path 'echo hello; echo MCPFUZZ_INJECT_MARKER' is outside the allowed repository '/tmp/fixtures/testrepo'"
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "error_leakage",
@@ -217,14 +197,9 @@
       "pattern_name": "Command Injection",
       "tool": "git_commit",
       "severity": "critical",
-      "status": "fail",
-      "detail": "Vulnerable: Semicolon injection with marker",
-      "evidence": {
-        "input": "echo hello; echo MCPFUZZ_INJECT_MARKER",
-        "param": "repo_path",
-        "payload_desc": "Semicolon injection with marker",
-        "output_snippet": "Repository path 'echo hello; echo MCPFUZZ_INJECT_MARKER' is outside the allowed repository '/tmp/fixtures/testrepo'"
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "error_leakage",
@@ -321,14 +296,9 @@
       "pattern_name": "Command Injection",
       "tool": "git_reset",
       "severity": "critical",
-      "status": "fail",
-      "detail": "Vulnerable: Semicolon injection with marker",
-      "evidence": {
-        "input": "echo hello; echo MCPFUZZ_INJECT_MARKER",
-        "param": "repo_path",
-        "payload_desc": "Semicolon injection with marker",
-        "output_snippet": "Repository path 'echo hello; echo MCPFUZZ_INJECT_MARKER' is outside the allowed repository '/tmp/fixtures/testrepo'"
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "error_leakage",
@@ -371,14 +341,9 @@
       "pattern_name": "Command Injection",
       "tool": "git_log",
       "severity": "critical",
-      "status": "fail",
-      "detail": "Vulnerable: Semicolon injection with marker",
-      "evidence": {
-        "input": "echo hello; echo MCPFUZZ_INJECT_MARKER",
-        "param": "repo_path",
-        "payload_desc": "Semicolon injection with marker",
-        "output_snippet": "Repository path 'echo hello; echo MCPFUZZ_INJECT_MARKER' is outside the allowed repository '/tmp/fixtures/testrepo'"
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "error_leakage",
@@ -421,14 +386,9 @@
       "pattern_name": "Command Injection",
       "tool": "git_create_branch",
       "severity": "critical",
-      "status": "fail",
-      "detail": "Vulnerable: Semicolon injection with marker",
-      "evidence": {
-        "input": "echo hello; echo MCPFUZZ_INJECT_MARKER",
-        "param": "repo_path",
-        "payload_desc": "Semicolon injection with marker",
-        "output_snippet": "Repository path 'echo hello; echo MCPFUZZ_INJECT_MARKER' is outside the allowed repository '/tmp/fixtures/testrepo'"
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "error_leakage",
@@ -480,14 +440,9 @@
       "pattern_name": "Command Injection",
       "tool": "git_checkout",
       "severity": "critical",
-      "status": "fail",
-      "detail": "Vulnerable: Semicolon injection with marker",
-      "evidence": {
-        "input": "echo hello; echo MCPFUZZ_INJECT_MARKER",
-        "param": "repo_path",
-        "payload_desc": "Semicolon injection with marker",
-        "output_snippet": "Repository path 'echo hello; echo MCPFUZZ_INJECT_MARKER' is outside the allowed repository '/tmp/fixtures/testrepo'"
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "error_leakage",
@@ -539,14 +494,9 @@
       "pattern_name": "Command Injection",
       "tool": "git_show",
       "severity": "critical",
-      "status": "fail",
-      "detail": "Vulnerable: Semicolon injection with marker",
-      "evidence": {
-        "input": "echo hello; echo MCPFUZZ_INJECT_MARKER",
-        "param": "repo_path",
-        "payload_desc": "Semicolon injection with marker",
-        "output_snippet": "Repository path 'echo hello; echo MCPFUZZ_INJECT_MARKER' is outside the allowed repository '/tmp/fixtures/testrepo'"
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "error_leakage",
@@ -589,14 +539,9 @@
       "pattern_name": "Command Injection",
       "tool": "git_branch",
       "severity": "critical",
-      "status": "fail",
-      "detail": "Vulnerable: Semicolon injection with marker",
-      "evidence": {
-        "input": "echo hello; echo MCPFUZZ_INJECT_MARKER",
-        "param": "repo_path",
-        "payload_desc": "Semicolon injection with marker",
-        "output_snippet": "Repository path 'echo hello; echo MCPFUZZ_INJECT_MARKER' is outside the allowed repository '/tmp/fixtures/testrepo'"
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "error_leakage",
@@ -642,9 +587,9 @@
   },
   "score": {
     "total": 64,
-    "passed": 53,
-    "failed": 11,
+    "passed": 64,
+    "failed": 0,
     "warnings": 0,
-    "critical_fails": 11
+    "critical_fails": 0
   }
 }

@@ -1,6 +1,6 @@
 {
   "target": "/tmp/mcp-fs-go /tmp/fixtures/safe",
-  "timestamp": "2026-04-20T10:06:43.680318+00:00",
+  "timestamp": "2026-04-20T10:46:24.432911+00:00",
   "tools_discovered": 14,
   "results": [
     {
@@ -49,21 +49,9 @@
       "pattern_name": "Command Injection",
       "tool": "create_directory",
       "severity": "critical",
-      "status": "warn",
-      "detail": "Potential issues detected (9 indicators)",
-      "evidence": {
-        "warnings": [
-          "Semicolon injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello; echo MCPFUZZ_INJECT_MARKER",
-          "AND injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello && echo MCPFUZZ_INJECT_MARKER",
-          "Pipe injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello | echo MCPFUZZ_INJECT_MARKER",
-          "Command substitution injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo $(echo MCPFUZZ_INJECT_MARKER)",
-          "Backtick injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo `echo MCPFUZZ_INJECT_MARKER`",
-          "Path with semicolon injection: Error: access denied - path outside allowed directories: /tmp/safe/test.txt; echo MCPFUZZ_INJECT_MARKER",
-          "Path with AND injection: Error: access denied - path outside allowed directories: /tmp/test.txt && echo MCPFUZZ_INJECT_MARKER",
-          "Filename with command substitution: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/test.txt$(echo MCPFUZZ_INJECT_MARKER)",
-          "Filename with pipe injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/test.txt|echo MCPFUZZ_INJECT_MARKER"
-        ]
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "error_leakage",
@@ -111,21 +99,9 @@
       "pattern_name": "Command Injection",
       "tool": "delete_file",
       "severity": "critical",
-      "status": "warn",
-      "detail": "Potential issues detected (9 indicators)",
-      "evidence": {
-        "warnings": [
-          "Semicolon injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello; echo MCPFUZZ_INJECT_MARKER",
-          "AND injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello && echo MCPFUZZ_INJECT_MARKER",
-          "Pipe injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello | echo MCPFUZZ_INJECT_MARKER",
-          "Command substitution injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo $(echo MCPFUZZ_INJECT_MARKER)",
-          "Backtick injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo `echo MCPFUZZ_INJECT_MARKER`",
-          "Path with semicolon injection: Error: access denied - path outside allowed directories: /tmp/safe/test.txt; echo MCPFUZZ_INJECT_MARKER",
-          "Path with AND injection: Error: access denied - path outside allowed directories: /tmp/test.txt && echo MCPFUZZ_INJECT_MARKER",
-          "Filename with command substitution: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/test.txt$(echo MCPFUZZ_INJECT_MARKER)",
-          "Filename with pipe injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/test.txt|echo MCPFUZZ_INJECT_MARKER"
-        ]
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "error_leakage",
@@ -173,21 +149,9 @@
       "pattern_name": "Command Injection",
       "tool": "get_file_info",
       "severity": "critical",
-      "status": "warn",
-      "detail": "Potential issues detected (9 indicators)",
-      "evidence": {
-        "warnings": [
-          "Semicolon injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello; echo MCPFUZZ_INJECT_MARKER",
-          "AND injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello && echo MCPFUZZ_INJECT_MARKER",
-          "Pipe injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello | echo MCPFUZZ_INJECT_MARKER",
-          "Command substitution injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo $(echo MCPFUZZ_INJECT_MARKER)",
-          "Backtick injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo `echo MCPFUZZ_INJECT_MARKER`",
-          "Path with semicolon injection: Error: access denied - path outside allowed directories: /tmp/safe/test.txt; echo MCPFUZZ_INJECT_MARKER",
-          "Path with AND injection: Error: access denied - path outside allowed directories: /tmp/test.txt && echo MCPFUZZ_INJECT_MARKER",
-          "Filename with command substitution: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/test.txt$(echo MCPFUZZ_INJECT_MARKER)",
-          "Filename with pipe injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/test.txt|echo MCPFUZZ_INJECT_MARKER"
-        ]
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "error_leakage",
@@ -262,21 +226,9 @@
       "pattern_name": "Command Injection",
       "tool": "list_directory",
       "severity": "critical",
-      "status": "warn",
-      "detail": "Potential issues detected (9 indicators)",
-      "evidence": {
-        "warnings": [
-          "Semicolon injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello; echo MCPFUZZ_INJECT_MARKER",
-          "AND injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello && echo MCPFUZZ_INJECT_MARKER",
-          "Pipe injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello | echo MCPFUZZ_INJECT_MARKER",
-          "Command substitution injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo $(echo MCPFUZZ_INJECT_MARKER)",
-          "Backtick injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo `echo MCPFUZZ_INJECT_MARKER`",
-          "Path with semicolon injection: Error: access denied - path outside allowed directories: /tmp/safe/test.txt; echo MCPFUZZ_INJECT_MARKER",
-          "Path with AND injection: Error: access denied - path outside allowed directories: /tmp/test.txt && echo MCPFUZZ_INJECT_MARKER",
-          "Filename with command substitution: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/test.txt$(echo MCPFUZZ_INJECT_MARKER)",
-          "Filename with pipe injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/test.txt|echo MCPFUZZ_INJECT_MARKER"
-        ]
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "error_leakage",
@@ -324,21 +276,9 @@
       "pattern_name": "Command Injection",
       "tool": "modify_file",
       "severity": "critical",
-      "status": "warn",
-      "detail": "Potential issues detected (9 indicators)",
-      "evidence": {
-        "warnings": [
-          "Semicolon injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello; echo MCPFUZZ_INJECT_MARKER",
-          "AND injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello && echo MCPFUZZ_INJECT_MARKER",
-          "Pipe injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello | echo MCPFUZZ_INJECT_MARKER",
-          "Command substitution injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo $(echo MCPFUZZ_INJECT_MARKER)",
-          "Backtick injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo `echo MCPFUZZ_INJECT_MARKER`",
-          "Path with semicolon injection: Error: access denied - path outside allowed directories: /tmp/safe/test.txt; echo MCPFUZZ_INJECT_MARKER",
-          "Path with AND injection: Error: access denied - path outside allowed directories: /tmp/test.txt && echo MCPFUZZ_INJECT_MARKER",
-          "Filename with command substitution: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/test.txt$(echo MCPFUZZ_INJECT_MARKER)",
-          "Filename with pipe injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/test.txt|echo MCPFUZZ_INJECT_MARKER"
-        ]
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "error_leakage",
@@ -427,21 +367,9 @@
       "pattern_name": "Command Injection",
       "tool": "read_file",
       "severity": "critical",
-      "status": "warn",
-      "detail": "Potential issues detected (9 indicators)",
-      "evidence": {
-        "warnings": [
-          "Semicolon injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello; echo MCPFUZZ_INJECT_MARKER",
-          "AND injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello && echo MCPFUZZ_INJECT_MARKER",
-          "Pipe injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello | echo MCPFUZZ_INJECT_MARKER",
-          "Command substitution injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo $(echo MCPFUZZ_INJECT_MARKER)",
-          "Backtick injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo `echo MCPFUZZ_INJECT_MARKER`",
-          "Path with semicolon injection: Error: access denied - path outside allowed directories: /tmp/safe/test.txt; echo MCPFUZZ_INJECT_MARKER",
-          "Path with AND injection: Error: access denied - path outside allowed directories: /tmp/test.txt && echo MCPFUZZ_INJECT_MARKER",
-          "Filename with command substitution: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/test.txt$(echo MCPFUZZ_INJECT_MARKER)",
-          "Filename with pipe injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/test.txt|echo MCPFUZZ_INJECT_MARKER"
-        ]
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "error_leakage",
@@ -516,21 +444,9 @@
       "pattern_name": "Command Injection",
       "tool": "search_files",
       "severity": "critical",
-      "status": "warn",
-      "detail": "Potential issues detected (9 indicators)",
-      "evidence": {
-        "warnings": [
-          "Semicolon injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello; echo MCPFUZZ_INJECT_MARKER",
-          "AND injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello && echo MCPFUZZ_INJECT_MARKER",
-          "Pipe injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello | echo MCPFUZZ_INJECT_MARKER",
-          "Command substitution injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo $(echo MCPFUZZ_INJECT_MARKER)",
-          "Backtick injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo `echo MCPFUZZ_INJECT_MARKER`",
-          "Path with semicolon injection: Error: access denied - path outside allowed directories: /tmp/safe/test.txt; echo MCPFUZZ_INJECT_MARKER",
-          "Path with AND injection: Error: access denied - path outside allowed directories: /tmp/test.txt && echo MCPFUZZ_INJECT_MARKER",
-          "Filename with command substitution: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/test.txt$(echo MCPFUZZ_INJECT_MARKER)",
-          "Filename with pipe injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/test.txt|echo MCPFUZZ_INJECT_MARKER"
-        ]
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "error_leakage",
@@ -578,21 +494,9 @@
       "pattern_name": "Command Injection",
       "tool": "search_within_files",
       "severity": "critical",
-      "status": "warn",
-      "detail": "Potential issues detected (9 indicators)",
-      "evidence": {
-        "warnings": [
-          "Semicolon injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello; echo MCPFUZZ_INJECT_MARKER",
-          "AND injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello && echo MCPFUZZ_INJECT_MARKER",
-          "Pipe injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello | echo MCPFUZZ_INJECT_MARKER",
-          "Command substitution injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo $(echo MCPFUZZ_INJECT_MARKER)",
-          "Backtick injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo `echo MCPFUZZ_INJECT_MARKER`",
-          "Path with semicolon injection: Error: access denied - path outside allowed directories: /tmp/safe/test.txt; echo MCPFUZZ_INJECT_MARKER",
-          "Path with AND injection: Error: access denied - path outside allowed directories: /tmp/test.txt && echo MCPFUZZ_INJECT_MARKER",
-          "Filename with command substitution: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/test.txt$(echo MCPFUZZ_INJECT_MARKER)",
-          "Filename with pipe injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/test.txt|echo MCPFUZZ_INJECT_MARKER"
-        ]
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "error_leakage",
@@ -640,21 +544,9 @@
       "pattern_name": "Command Injection",
       "tool": "tree",
       "severity": "critical",
-      "status": "warn",
-      "detail": "Potential issues detected (9 indicators)",
-      "evidence": {
-        "warnings": [
-          "Semicolon injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello; echo MCPFUZZ_INJECT_MARKER",
-          "AND injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello && echo MCPFUZZ_INJECT_MARKER",
-          "Pipe injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello | echo MCPFUZZ_INJECT_MARKER",
-          "Command substitution injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo $(echo MCPFUZZ_INJECT_MARKER)",
-          "Backtick injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo `echo MCPFUZZ_INJECT_MARKER`",
-          "Path with semicolon injection: Error: access denied - path outside allowed directories: /tmp/safe/test.txt; echo MCPFUZZ_INJECT_MARKER",
-          "Path with AND injection: Error: access denied - path outside allowed directories: /tmp/test.txt && echo MCPFUZZ_INJECT_MARKER",
-          "Filename with command substitution: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/test.txt$(echo MCPFUZZ_INJECT_MARKER)",
-          "Filename with pipe injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/test.txt|echo MCPFUZZ_INJECT_MARKER"
-        ]
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "error_leakage",
@@ -702,21 +594,9 @@
       "pattern_name": "Command Injection",
       "tool": "write_file",
       "severity": "critical",
-      "status": "warn",
-      "detail": "Potential issues detected (9 indicators)",
-      "evidence": {
-        "warnings": [
-          "Semicolon injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello; echo MCPFUZZ_INJECT_MARKER",
-          "AND injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello && echo MCPFUZZ_INJECT_MARKER",
-          "Pipe injection with marker: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo hello | echo MCPFUZZ_INJECT_MARKER",
-          "Command substitution injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo $(echo MCPFUZZ_INJECT_MARKER)",
-          "Backtick injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/echo `echo MCPFUZZ_INJECT_MARKER`",
-          "Path with semicolon injection: Error: access denied - path outside allowed directories: /tmp/safe/test.txt; echo MCPFUZZ_INJECT_MARKER",
-          "Path with AND injection: Error: access denied - path outside allowed directories: /tmp/test.txt && echo MCPFUZZ_INJECT_MARKER",
-          "Filename with command substitution: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/test.txt$(echo MCPFUZZ_INJECT_MARKER)",
-          "Filename with pipe injection: Error: access denied - path outside allowed directories: /home/user/mcpfuzz/test.txt|echo MCPFUZZ_INJECT_MARKER"
-        ]
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "error_leakage",
@@ -776,9 +656,9 @@
   },
   "score": {
     "total": 65,
-    "passed": 43,
+    "passed": 53,
     "failed": 12,
-    "warnings": 10,
+    "warnings": 0,
     "critical_fails": 0
   }
 }

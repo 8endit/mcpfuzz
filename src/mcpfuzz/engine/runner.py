@@ -226,16 +226,49 @@ def _extract_response_text(resp: dict[str, Any]) -> str:
 
 
 def _evaluate_response(response_text: str, pattern: Pattern, payload: Payload) -> str:
-    """Evaluate a response against detection criteria. Returns 'pass', 'fail', or 'warn'."""
+    """Evaluate a response against detection criteria. Returns 'pass', 'fail', or 'warn'.
+
+    Two complementary echo-FP defenses are applied to positive indicators:
+
+    1. The literal payload string is stripped from the response before match,
+       so indicator substrings that only exist inside a verbatim echo of the
+       payload don't count.
+    2. When an indicator is itself a substring of the payload (e.g. the
+       MCPFUZZ_INJECT_MARKER marker in a command-injection payload, or
+       ``sqlite_master`` inside a UNION SELECT payload), we require the
+       indicator to occur MORE times in the response than in the payload.
+       A real injection produces extra occurrences (executed command output,
+       an actual schema dump); a partial-echo / error-echo produces at most
+       the payload's own count.
+
+    Exception: ``prompt_injection`` tests whether untrusted payload text is
+    passed through to the LLM-consumed output. For that pattern the echo
+    itself IS the vulnerability, so indicators are matched as-is.
+    """
     response_lower = response_text.lower()
+    payload_lower = payload.value.lower() if payload.value else ""
 
-    # Check for positive detection indicators (signs of vulnerability)
-    has_vuln_indicator = any(
-        indicator.lower() in response_lower
-        for indicator in pattern.detection.response_contains_any
-    )
+    if pattern.id == "prompt_injection":
+        has_vuln_indicator = any(
+            indicator.lower() in response_lower
+            for indicator in pattern.detection.response_contains_any
+        )
+    else:
+        stripped = response_text.replace(payload.value, "") if payload.value else response_text
+        stripped_lower = stripped.lower()
 
-    # Check for negative indicators (signs the server handled it properly)
+        has_vuln_indicator = False
+        for indicator in pattern.detection.response_contains_any:
+            ind = indicator.lower()
+            if ind and ind in payload_lower:
+                if response_lower.count(ind) > payload_lower.count(ind):
+                    has_vuln_indicator = True
+                    break
+            else:
+                if ind in stripped_lower:
+                    has_vuln_indicator = True
+                    break
+
     has_safe_indicator = any(
         indicator.lower() in response_lower
         for indicator in pattern.detection.response_not_contains
