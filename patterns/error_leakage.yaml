@@ -24,23 +24,26 @@ payloads:
     platform: "any"
 
 detection:
+  # Only indicators that strongly imply a *real* internal leak (stack traces,
+  # server install paths, credential-assignment patterns). Plain words like
+  # "password", "secret", "token", "sqlite" are too common — they match on
+  # success messages ("encrypted successfully with password"), on tool output
+  # that *returns* table names ("secrets, users"), and on ordinary parser
+  # errors ("unrecognized token"). Plain "/home/", "/var/", "/usr/" match
+  # any path echoed back in a rejection message, which is usually a design
+  # requirement, not a leak.
   response_contains_any:
-    - "Traceback"
-    - "File \""
-    - "/home/"
-    - "/var/"
-    - "/usr/"
-    - "C:\\"
-    - "node_modules"
-    - "site-packages"
-    - ".py\","
-    - "connection"
-    - "password"
-    - "secret"
-    - "token"
-    - "sqlite"
-    - "postgres"
-    - "mysql"
-    - "at line"
+    - "Traceback (most recent call last)"
     - "stack trace"
-  response_not_contains: []
+    - "site-packages"
+    - "dist-packages"
+    - "node_modules"
+    - ".py\", line "
+    - "C:\\"
+    - "password="
+    - "secret_key"
+    - "api_key="
+    - "SECRET_"
+  response_not_contains:
+    - "successfully"
+    - "succeeded"

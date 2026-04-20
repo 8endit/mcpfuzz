@@ -1,6 +1,6 @@
 {
   "target": "word_mcp_server",
-  "timestamp": "2026-04-20T10:45:46.455378+00:00",
+  "timestamp": "2026-04-20T11:26:41.475531+00:00",
   "tools_discovered": 25,
   "results": [
     {
@@ -458,14 +458,9 @@
       "pattern_name": "Error Information Leakage",
       "tool": "add_picture",
       "severity": "high",
-      "status": "fail",
-      "detail": "Vulnerable: Empty input to trigger error",
-      "evidence": {
-        "input": "",
-        "param": "filename",
-        "payload_desc": "Empty input to trigger error",
-        "output_snippet": "Image file not found: /home/user/mcpfuzz/test"
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "input_validation",
@@ -918,14 +913,9 @@
       "pattern_name": "Error Information Leakage",
       "tool": "protect_document",
       "severity": "high",
-      "status": "fail",
-      "detail": "Vulnerable: Empty input to trigger error",
-      "evidence": {
-        "input": "",
-        "param": "filename",
-        "payload_desc": "Empty input to trigger error",
-        "output_snippet": "Document .docx encrypted successfully with password."
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "input_validation",
@@ -1382,14 +1372,9 @@
       "pattern_name": "Error Information Leakage",
       "tool": "convert_to_pdf",
       "severity": "high",
-      "status": "fail",
-      "detail": "Vulnerable: Empty input to trigger error",
-      "evidence": {
-        "input": "",
-        "param": "filename",
-        "payload_desc": "Empty input to trigger error",
-        "output_snippet": "Document successfully converted to PDF: /home/user/mcpfuzz/.docx.pdf"
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "input_validation",
@@ -1435,8 +1420,8 @@
   },
   "score": {
     "total": 156,
-    "passed": 152,
-    "failed": 4,
+    "passed": 155,
+    "failed": 1,
     "warnings": 0,
     "critical_fails": 0
   }

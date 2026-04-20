@@ -1,6 +1,6 @@
 {
   "target": "npx -y @modelcontextprotocol/server-sequential-thinking",
-  "timestamp": "2026-04-20T10:46:30.197754+00:00",
+  "timestamp": "2026-04-20T11:27:38.994010+00:00",
   "tools_discovered": 1,
   "results": [
     {

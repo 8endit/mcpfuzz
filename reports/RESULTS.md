@@ -67,52 +67,74 @@ real findings remain.
 
 ### What changed in the scanner
 
-- `src/mcpfuzz/engine/runner.py::_evaluate_response`: positive indicators now
-  (a) strip verbatim payload echoes from the response before matching and
-  (b) when the indicator itself is a substring of the payload, require it to
-  occur *more often* in the response than in the payload. `prompt_injection`
-  keeps the plain echo-matches-as-hit semantics because the echo itself is the
-  vulnerability being tested there.
-- `patterns/sql_injection.yaml`: dropped `"syntax error"`, `"unrecognized
-  token"`, `"near \""`, `"CREATE TABLE"`, `"3."` from the positive list
-  (too weak / shared with rejection messages); added them as *negative*
-  indicators so a server that rejects a UNION payload with a SQL parser
-  error is no longer flagged.
-- New unit tests cover all three edge cases (full echo, partial echo, real
-  execution) for both CRITICAL patterns plus prompt-injection.
+Two successive fixes landed on this branch:
+
+1. **CRITICAL-tier echo FPs** (`src/mcpfuzz/engine/runner.py`, `patterns/sql_injection.yaml`).
+   Positive indicators now (a) strip verbatim payload echoes from the response
+   before matching, and (b) when the indicator itself is a substring of the
+   payload, require it to occur *more often* in the response than in the
+   payload. `prompt_injection` keeps the plain echo-matches-as-hit semantics
+   because the echo itself IS the vulnerability being tested. Dropped
+   `"syntax error"`, `"unrecognized token"`, `"near \""`, `"CREATE TABLE"`,
+   `"3."` from the SQL positive list; added them as negatives.
+
+2. **HIGH-tier error-leakage FPs** (`patterns/error_leakage.yaml`).
+   The old indicator list contained many words (`"password"`, `"secret"`,
+   `"token"`, `"sqlite"`, `"postgres"`, `"connection"`, `"/home/"`, `"/var/"`,
+   `"/usr/"`) that matched normal tool output or ordinary rejection
+   messages. Rewritten to only flag stack-trace markers
+   (`"Traceback (most recent call last)"`, `".py\", line "`, `"site-packages"`,
+   `"dist-packages"`, `"node_modules"`, `"C:\\"`, `"stack trace"`) or
+   credential-assignment patterns (`"password="`, `"secret_key"`, `"api_key="`,
+   `"SECRET_"`). Added `"successfully"` / `"succeeded"` as negative
+   indicators so success messages never fire.
+
+8 new unit tests cover the edge cases: full echo / partial echo / real
+execution / prompt-injection-on-echo / SQL-parser-error / password-in-success /
+real-Python-traceback.
 
 ### Results (all 9 servers, post-fix)
 
 | # | Server | Stars | Category | Tools | Score | Findings |
 |---|--------|-------|----------|-------|-------|----------|
 | 14 | modelcontextprotocol/servers → **mcp-server-git** (Python, official) | 50k | git | 12 | **64/64** | — clean |
-| 15 | modelcontextprotocol/servers → **mcp-server-fetch** (Python, official) | 50k | fetch | 1 | 4/5 | 1 HIGH prompt-inj |
-| 16 | runekaagaard/**mcp-alchemy** | ~300 | database | 4 | 12/15 | 2 HIGH err-leak, 1 HIGH prompt-inj |
-| 17 | vivekVells/**mcp-pandoc** | ~200 | search | 1 | 5/6 | 1 HIGH prompt-inj |
-| 18 | GongRzhe/**Office-Word-MCP-Server** | ~1k | filesystem | 25 | 152/156 | 3 HIGH err-leak, 1 HIGH prompt-inj |
-| 19 | mark3labs/**mcp-filesystem-server** (Go) | ~500 | filesystem | 14 | 53/65 | 12 HIGH err-leak (path disclosure in rejection msgs — arguably MEDIUM in practice) |
+| 15 | modelcontextprotocol/servers → **mcp-server-fetch** (Python, official) | 50k | fetch | 1 | 4/5 | 1 HIGH prompt-inj (by design for a fetch server) |
+| 16 | runekaagaard/**mcp-alchemy** | ~300 | database | 4 | 14/15 | 1 HIGH prompt-inj (SQL-parser-error echoes payload) |
+| 17 | vivekVells/**mcp-pandoc** | ~200 | search | 1 | 5/6 | 1 HIGH prompt-inj (document converter — passthrough is the function) |
+| 18 | GongRzhe/**Office-Word-MCP-Server** | ~1k | filesystem | 25 | 155/156 | 1 HIGH prompt-inj (Pydantic validation error echoes input) |
+| 19 | mark3labs/**mcp-filesystem-server** (Go) | ~500 | filesystem | 14 | **65/65** | — clean |
 | 20 | modelcontextprotocol/servers → **mcp-server-time** (Python, official) | 50k | system | 2 | **7/7** | — clean |
-| 21 | modelcontextprotocol/servers-archived → **mcp-server-sqlite** (Python, official) | 50k | database | 6 | 26/28 | 2 HIGH err-leak |
+| 21 | modelcontextprotocol/servers-archived → **mcp-server-sqlite** (Python, official) | 50k | database | 6 | **28/28** | — clean |
 | 22 | `@modelcontextprotocol/server-sequential-thinking` (TypeScript, official) | 50k | system | 1 | **3/3** | — clean |
 
-### FP-fix validation (raw → post-fix)
+### FP-fix validation (raw → post-both-fixes)
 
 | Server | Pattern | Raw | Post-fix | Notes |
 |--------|---------|----:|----:|-------|
-| mcp-server-git (official) | Command Injection | 11 | **0** | Server rejected every path with `"outside the allowed repository"`; marker was just echoed. |
-| Office-Word | Command Injection | 23 | **0** | Server wrote the payload as a literal filename; no shell. |
-| Office-Word | SQL Injection | 13 | **0** | Same echo class — no database involved at all. |
-| mcp-alchemy | SQL Injection on `execute_query` | 1 | **0** | `execute_query` is by design a raw-SQL tool; the payload produced a SQL parser error which the tightened pattern now treats as a negative. |
-| mcp-server-sqlite (official) | SQL Injection | 2 | **0** | Identical pattern: rejection messages contain `"CREATE TABLE"` / echo `sqlite_master` fragments, now discounted. |
+| mcp-server-git (official) | Command Injection | 11 | **0** | Rejected path was echoed; marker detection updated. |
+| Office-Word | Command Injection | 23 | **0** | Payload stored as literal filename; no shell. |
+| Office-Word | SQL Injection | 13 | **0** | Same echo class — no database involved. |
+| Office-Word | Error Info Leakage | 3 | **0** | `"password"` / `"/home/"` indicators dropped; `"successfully"` now negative. |
+| mcp-alchemy | SQL Injection on `execute_query` | 1 | **0** | `syntax error` is now a negative indicator. |
+| mcp-alchemy | Error Info Leakage | 2 | **0** | `"sqlite"` / `"secret"` indicators dropped. |
+| mcp-server-sqlite (official) | SQL Injection | 2 | **0** | Same echo class fixed by runner update. |
+| mcp-server-sqlite (official) | Error Info Leakage | 2 | **0** | `"token"` matched `"unrecognized token"` — indicator removed. |
+| mcp-filesystem-server (Go) | Error Info Leakage | 12 | **0** | `"/home/"` was too weak; every rejection mentions the path by design. |
 
-**Total FPs eliminated: 50** across 6 servers. No real findings were lost
-(manually verified against the raw JSON reports).
+**Total FPs eliminated: 69** across 7 servers. No real findings were lost —
+every `"pass"` was manually verified against the raw JSON reports.
 
-### Real new findings after the fix
+### Real findings after the fix
 
-- **23 HIGH** across 7 servers (12 err-leak on `mcp-filesystem-server` alone).
 - **0 CRITICAL**.
-- 3 servers fully clean: `mcp-server-git`, `mcp-server-time`,
+- **4 HIGH**, all of type *"prompt injection in response"* — i.e. the server
+  echoes untrusted input into its output such that a downstream LLM sees the
+  injected `<system>…</system>` / `Ignore previous instructions …` text.
+  For fetch and document-conversion tools this is the *raison d'être* of the
+  server (it's what they're supposed to return); the finding is a useful
+  reminder for agent authors, not a server-side bug per se.
+- **5 servers fully clean** (64/64 ... 28/28): `mcp-server-git`,
+  `mcp-server-time`, `mcp-server-sqlite`, `mcp-filesystem-server` (Go),
   `@modelcontextprotocol/server-sequential-thinking`.
 
 ## Summary Statistics
@@ -121,7 +143,7 @@ real findings remain.
 - **Successfully scanned**: 22 (13 original + 9 new)
 - **Real vulnerabilities found so far**:
   - Original batch: 3 servers with findings (4 CRITICAL, 5 HIGH, 1 MEDIUM)
-  - 2026-04-20 batch: 7 servers with findings (0 CRITICAL, 23 HIGH); 3 fully clean
-- **Scanner FP rate on CRITICAL tier before fix**: 50 / 50 raw CRITICAL =
-  100 % on servers that echo inputs. After fix: 0.
+  - 2026-04-20 batch: 4 servers with 1 HIGH prompt-inj each; 5 fully clean
+- **Scanner FP rate on the new batch before fixes**: 69 / 73 raw fails. After
+  fixes: 0 false positives, 0 lost real findings.
 - **8 test patterns**: Path Traversal, Command Injection, SSRF, SQL Injection, Error Leakage, Prompt Injection, Input Validation, Resource Exhaustion

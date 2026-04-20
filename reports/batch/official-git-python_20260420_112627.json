@@ -1,27 +1,40 @@
 {
-  "target": "/tmp/mcp-fs-go /tmp/fixtures/safe",
-  "timestamp": "2026-04-20T10:46:24.432911+00:00",
-  "tools_discovered": 14,
+  "target": "mcp-server-git --repository /tmp/fixtures/testrepo",
+  "timestamp": "2026-04-20T11:26:28.644252+00:00",
+  "tools_discovered": 12,
   "results": [
     {
+      "pattern": "command_injection",
+      "pattern_name": "Command Injection",
+      "tool": "git_status",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
       "pattern": "error_leakage",
       "pattern_name": "Error Information Leakage",
-      "tool": "copy_file",
+      "tool": "git_status",
       "severity": "high",
-      "status": "fail",
-      "detail": "Vulnerable: Empty input to trigger error",
-      "evidence": {
-        "input": "",
-        "param": "destination",
-        "payload_desc": "Empty input to trigger error",
-        "output_snippet": "Error with source path: access denied - path outside allowed directories: /home/user/mcpfuzz/test"
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "input_validation",
       "pattern_name": "Input Validation",
-      "tool": "copy_file",
+      "tool": "git_status",
       "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "path_traversal",
+      "pattern_name": "Path Traversal",
+      "tool": "git_status",
+      "severity": "critical",
       "status": "pass",
       "detail": "All payloads handled safely.",
       "evidence": {}
@@ -29,7 +42,142 @@
     {
       "pattern": "resource_exhaustion",
       "pattern_name": "Resource Exhaustion",
-      "tool": "copy_file",
+      "tool": "git_status",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "command_injection",
+      "pattern_name": "Command Injection",
+      "tool": "git_diff_unstaged",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "error_leakage",
+      "pattern_name": "Error Information Leakage",
+      "tool": "git_diff_unstaged",
+      "severity": "high",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "input_validation",
+      "pattern_name": "Input Validation",
+      "tool": "git_diff_unstaged",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "path_traversal",
+      "pattern_name": "Path Traversal",
+      "tool": "git_diff_unstaged",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "resource_exhaustion",
+      "pattern_name": "Resource Exhaustion",
+      "tool": "git_diff_unstaged",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "command_injection",
+      "pattern_name": "Command Injection",
+      "tool": "git_diff_staged",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "error_leakage",
+      "pattern_name": "Error Information Leakage",
+      "tool": "git_diff_staged",
+      "severity": "high",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "input_validation",
+      "pattern_name": "Input Validation",
+      "tool": "git_diff_staged",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "path_traversal",
+      "pattern_name": "Path Traversal",
+      "tool": "git_diff_staged",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "resource_exhaustion",
+      "pattern_name": "Resource Exhaustion",
+      "tool": "git_diff_staged",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "command_injection",
+      "pattern_name": "Command Injection",
+      "tool": "git_diff",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "error_leakage",
+      "pattern_name": "Error Information Leakage",
+      "tool": "git_diff",
+      "severity": "high",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "input_validation",
+      "pattern_name": "Input Validation",
+      "tool": "git_diff",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "path_traversal",
+      "pattern_name": "Path Traversal",
+      "tool": "git_diff",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "resource_exhaustion",
+      "pattern_name": "Resource Exhaustion",
+      "tool": "git_diff",
       "severity": "medium",
       "status": "pass",
       "detail": "All payloads handled safely.",
@@ -38,7 +186,7 @@
     {
       "pattern": "ssrf",
       "pattern_name": "SSRF (Server-Side Request Forgery)",
-      "tool": "copy_file",
+      "tool": "git_diff",
       "severity": "critical",
       "status": "pass",
       "detail": "All payloads handled safely.",
@@ -47,7 +195,7 @@
     {
       "pattern": "command_injection",
       "pattern_name": "Command Injection",
-      "tool": "create_directory",
+      "tool": "git_commit",
       "severity": "critical",
       "status": "pass",
       "detail": "All payloads handled safely.",
@@ -56,21 +204,16 @@
     {
       "pattern": "error_leakage",
       "pattern_name": "Error Information Leakage",
-      "tool": "create_directory",
+      "tool": "git_commit",
       "severity": "high",
-      "status": "fail",
-      "detail": "Vulnerable: Empty input to trigger error",
-      "evidence": {
-        "input": "",
-        "param": "path",
-        "payload_desc": "Empty input to trigger error",
-        "output_snippet": "Error: access denied - path outside allowed directories: /home/user/mcpfuzz"
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "input_validation",
       "pattern_name": "Input Validation",
-      "tool": "create_directory",
+      "tool": "git_commit",
       "severity": "medium",
       "status": "pass",
       "detail": "All payloads handled safely.",
@@ -79,552 +222,7 @@
     {
       "pattern": "path_traversal",
       "pattern_name": "Path Traversal",
-      "tool": "create_directory",
-      "severity": "critical",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "resource_exhaustion",
-      "pattern_name": "Resource Exhaustion",
-      "tool": "create_directory",
-      "severity": "medium",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "command_injection",
-      "pattern_name": "Command Injection",
-      "tool": "delete_file",
-      "severity": "critical",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "error_leakage",
-      "pattern_name": "Error Information Leakage",
-      "tool": "delete_file",
-      "severity": "high",
-      "status": "fail",
-      "detail": "Vulnerable: Empty input to trigger error",
-      "evidence": {
-        "input": "",
-        "param": "path",
-        "payload_desc": "Empty input to trigger error",
-        "output_snippet": "Error: access denied - path outside allowed directories: /home/user/mcpfuzz"
-      }
-    },
-    {
-      "pattern": "input_validation",
-      "pattern_name": "Input Validation",
-      "tool": "delete_file",
-      "severity": "medium",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "path_traversal",
-      "pattern_name": "Path Traversal",
-      "tool": "delete_file",
-      "severity": "critical",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "resource_exhaustion",
-      "pattern_name": "Resource Exhaustion",
-      "tool": "delete_file",
-      "severity": "medium",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "command_injection",
-      "pattern_name": "Command Injection",
-      "tool": "get_file_info",
-      "severity": "critical",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "error_leakage",
-      "pattern_name": "Error Information Leakage",
-      "tool": "get_file_info",
-      "severity": "high",
-      "status": "fail",
-      "detail": "Vulnerable: Empty input to trigger error",
-      "evidence": {
-        "input": "",
-        "param": "path",
-        "payload_desc": "Empty input to trigger error",
-        "output_snippet": "Error: access denied - path outside allowed directories: /home/user/mcpfuzz"
-      }
-    },
-    {
-      "pattern": "input_validation",
-      "pattern_name": "Input Validation",
-      "tool": "get_file_info",
-      "severity": "medium",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "path_traversal",
-      "pattern_name": "Path Traversal",
-      "tool": "get_file_info",
-      "severity": "critical",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "resource_exhaustion",
-      "pattern_name": "Resource Exhaustion",
-      "tool": "get_file_info",
-      "severity": "medium",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "error_leakage",
-      "pattern_name": "Error Information Leakage",
-      "tool": "list_allowed_directories",
-      "severity": "high",
-      "status": "pass",
-      "detail": "No matching parameters found \u2014 pattern not applicable.",
-      "evidence": {}
-    },
-    {
-      "pattern": "input_validation",
-      "pattern_name": "Input Validation",
-      "tool": "list_allowed_directories",
-      "severity": "medium",
-      "status": "pass",
-      "detail": "No matching parameters found \u2014 pattern not applicable.",
-      "evidence": {}
-    },
-    {
-      "pattern": "resource_exhaustion",
-      "pattern_name": "Resource Exhaustion",
-      "tool": "list_allowed_directories",
-      "severity": "medium",
-      "status": "pass",
-      "detail": "No matching parameters found \u2014 pattern not applicable.",
-      "evidence": {}
-    },
-    {
-      "pattern": "command_injection",
-      "pattern_name": "Command Injection",
-      "tool": "list_directory",
-      "severity": "critical",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "error_leakage",
-      "pattern_name": "Error Information Leakage",
-      "tool": "list_directory",
-      "severity": "high",
-      "status": "fail",
-      "detail": "Vulnerable: Empty input to trigger error",
-      "evidence": {
-        "input": "",
-        "param": "path",
-        "payload_desc": "Empty input to trigger error",
-        "output_snippet": "Error: access denied - path outside allowed directories: /home/user/mcpfuzz"
-      }
-    },
-    {
-      "pattern": "input_validation",
-      "pattern_name": "Input Validation",
-      "tool": "list_directory",
-      "severity": "medium",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "path_traversal",
-      "pattern_name": "Path Traversal",
-      "tool": "list_directory",
-      "severity": "critical",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "resource_exhaustion",
-      "pattern_name": "Resource Exhaustion",
-      "tool": "list_directory",
-      "severity": "medium",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "command_injection",
-      "pattern_name": "Command Injection",
-      "tool": "modify_file",
-      "severity": "critical",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "error_leakage",
-      "pattern_name": "Error Information Leakage",
-      "tool": "modify_file",
-      "severity": "high",
-      "status": "fail",
-      "detail": "Vulnerable: Empty input to trigger error",
-      "evidence": {
-        "input": "",
-        "param": "find",
-        "payload_desc": "Empty input to trigger error",
-        "output_snippet": "Error: access denied - path outside allowed directories: /home/user/mcpfuzz/test"
-      }
-    },
-    {
-      "pattern": "input_validation",
-      "pattern_name": "Input Validation",
-      "tool": "modify_file",
-      "severity": "medium",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "path_traversal",
-      "pattern_name": "Path Traversal",
-      "tool": "modify_file",
-      "severity": "critical",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "resource_exhaustion",
-      "pattern_name": "Resource Exhaustion",
-      "tool": "modify_file",
-      "severity": "medium",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "error_leakage",
-      "pattern_name": "Error Information Leakage",
-      "tool": "move_file",
-      "severity": "high",
-      "status": "fail",
-      "detail": "Vulnerable: Empty input to trigger error",
-      "evidence": {
-        "input": "",
-        "param": "destination",
-        "payload_desc": "Empty input to trigger error",
-        "output_snippet": "Error with source path: access denied - path outside allowed directories: /home/user/mcpfuzz/test"
-      }
-    },
-    {
-      "pattern": "input_validation",
-      "pattern_name": "Input Validation",
-      "tool": "move_file",
-      "severity": "medium",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "resource_exhaustion",
-      "pattern_name": "Resource Exhaustion",
-      "tool": "move_file",
-      "severity": "medium",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "ssrf",
-      "pattern_name": "SSRF (Server-Side Request Forgery)",
-      "tool": "move_file",
-      "severity": "critical",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "command_injection",
-      "pattern_name": "Command Injection",
-      "tool": "read_file",
-      "severity": "critical",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "error_leakage",
-      "pattern_name": "Error Information Leakage",
-      "tool": "read_file",
-      "severity": "high",
-      "status": "fail",
-      "detail": "Vulnerable: Empty input to trigger error",
-      "evidence": {
-        "input": "",
-        "param": "path",
-        "payload_desc": "Empty input to trigger error",
-        "output_snippet": "Error: access denied - path outside allowed directories: /home/user/mcpfuzz"
-      }
-    },
-    {
-      "pattern": "input_validation",
-      "pattern_name": "Input Validation",
-      "tool": "read_file",
-      "severity": "medium",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "path_traversal",
-      "pattern_name": "Path Traversal",
-      "tool": "read_file",
-      "severity": "critical",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "resource_exhaustion",
-      "pattern_name": "Resource Exhaustion",
-      "tool": "read_file",
-      "severity": "medium",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "error_leakage",
-      "pattern_name": "Error Information Leakage",
-      "tool": "read_multiple_files",
-      "severity": "high",
-      "status": "pass",
-      "detail": "No matching parameters found \u2014 pattern not applicable.",
-      "evidence": {}
-    },
-    {
-      "pattern": "input_validation",
-      "pattern_name": "Input Validation",
-      "tool": "read_multiple_files",
-      "severity": "medium",
-      "status": "pass",
-      "detail": "No matching parameters found \u2014 pattern not applicable.",
-      "evidence": {}
-    },
-    {
-      "pattern": "resource_exhaustion",
-      "pattern_name": "Resource Exhaustion",
-      "tool": "read_multiple_files",
-      "severity": "medium",
-      "status": "pass",
-      "detail": "No matching parameters found \u2014 pattern not applicable.",
-      "evidence": {}
-    },
-    {
-      "pattern": "command_injection",
-      "pattern_name": "Command Injection",
-      "tool": "search_files",
-      "severity": "critical",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "error_leakage",
-      "pattern_name": "Error Information Leakage",
-      "tool": "search_files",
-      "severity": "high",
-      "status": "fail",
-      "detail": "Vulnerable: Empty input to trigger error",
-      "evidence": {
-        "input": "",
-        "param": "path",
-        "payload_desc": "Empty input to trigger error",
-        "output_snippet": "Error: access denied - path outside allowed directories: /home/user/mcpfuzz"
-      }
-    },
-    {
-      "pattern": "input_validation",
-      "pattern_name": "Input Validation",
-      "tool": "search_files",
-      "severity": "medium",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "path_traversal",
-      "pattern_name": "Path Traversal",
-      "tool": "search_files",
-      "severity": "critical",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "resource_exhaustion",
-      "pattern_name": "Resource Exhaustion",
-      "tool": "search_files",
-      "severity": "medium",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "command_injection",
-      "pattern_name": "Command Injection",
-      "tool": "search_within_files",
-      "severity": "critical",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "error_leakage",
-      "pattern_name": "Error Information Leakage",
-      "tool": "search_within_files",
-      "severity": "high",
-      "status": "fail",
-      "detail": "Vulnerable: Empty input to trigger error",
-      "evidence": {
-        "input": "",
-        "param": "path",
-        "payload_desc": "Empty input to trigger error",
-        "output_snippet": "Error: access denied - path outside allowed directories: /home/user/mcpfuzz"
-      }
-    },
-    {
-      "pattern": "input_validation",
-      "pattern_name": "Input Validation",
-      "tool": "search_within_files",
-      "severity": "medium",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "path_traversal",
-      "pattern_name": "Path Traversal",
-      "tool": "search_within_files",
-      "severity": "critical",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "resource_exhaustion",
-      "pattern_name": "Resource Exhaustion",
-      "tool": "search_within_files",
-      "severity": "medium",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "command_injection",
-      "pattern_name": "Command Injection",
-      "tool": "tree",
-      "severity": "critical",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "error_leakage",
-      "pattern_name": "Error Information Leakage",
-      "tool": "tree",
-      "severity": "high",
-      "status": "fail",
-      "detail": "Vulnerable: Empty input to trigger error",
-      "evidence": {
-        "input": "",
-        "param": "path",
-        "payload_desc": "Empty input to trigger error",
-        "output_snippet": "Error: access denied - path outside allowed directories: /home/user/mcpfuzz"
-      }
-    },
-    {
-      "pattern": "input_validation",
-      "pattern_name": "Input Validation",
-      "tool": "tree",
-      "severity": "medium",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "path_traversal",
-      "pattern_name": "Path Traversal",
-      "tool": "tree",
-      "severity": "critical",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "resource_exhaustion",
-      "pattern_name": "Resource Exhaustion",
-      "tool": "tree",
-      "severity": "medium",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "command_injection",
-      "pattern_name": "Command Injection",
-      "tool": "write_file",
-      "severity": "critical",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "error_leakage",
-      "pattern_name": "Error Information Leakage",
-      "tool": "write_file",
-      "severity": "high",
-      "status": "fail",
-      "detail": "Vulnerable: Empty input to trigger error",
-      "evidence": {
-        "input": "",
-        "param": "content",
-        "payload_desc": "Empty input to trigger error",
-        "output_snippet": "Error: access denied - path outside allowed directories: /home/user/mcpfuzz/test"
-      }
-    },
-    {
-      "pattern": "input_validation",
-      "pattern_name": "Input Validation",
-      "tool": "write_file",
-      "severity": "medium",
-      "status": "pass",
-      "detail": "All payloads handled safely.",
-      "evidence": {}
-    },
-    {
-      "pattern": "path_traversal",
-      "pattern_name": "Path Traversal",
-      "tool": "write_file",
+      "tool": "git_commit",
       "severity": "critical",
       "status": "pass",
       "detail": "All payloads handled safely.",
@@ -633,7 +231,7 @@
     {
       "pattern": "prompt_injection",
       "pattern_name": "Prompt Injection in Responses",
-      "tool": "write_file",
+      "tool": "git_commit",
       "severity": "high",
       "status": "pass",
       "detail": "All payloads handled safely.",
@@ -642,7 +240,340 @@
     {
       "pattern": "resource_exhaustion",
       "pattern_name": "Resource Exhaustion",
-      "tool": "write_file",
+      "tool": "git_commit",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "command_injection",
+      "pattern_name": "Command Injection",
+      "tool": "git_add",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "error_leakage",
+      "pattern_name": "Error Information Leakage",
+      "tool": "git_add",
+      "severity": "high",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "input_validation",
+      "pattern_name": "Input Validation",
+      "tool": "git_add",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "path_traversal",
+      "pattern_name": "Path Traversal",
+      "tool": "git_add",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "resource_exhaustion",
+      "pattern_name": "Resource Exhaustion",
+      "tool": "git_add",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "command_injection",
+      "pattern_name": "Command Injection",
+      "tool": "git_reset",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "error_leakage",
+      "pattern_name": "Error Information Leakage",
+      "tool": "git_reset",
+      "severity": "high",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "input_validation",
+      "pattern_name": "Input Validation",
+      "tool": "git_reset",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "path_traversal",
+      "pattern_name": "Path Traversal",
+      "tool": "git_reset",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "resource_exhaustion",
+      "pattern_name": "Resource Exhaustion",
+      "tool": "git_reset",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "command_injection",
+      "pattern_name": "Command Injection",
+      "tool": "git_log",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "error_leakage",
+      "pattern_name": "Error Information Leakage",
+      "tool": "git_log",
+      "severity": "high",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "input_validation",
+      "pattern_name": "Input Validation",
+      "tool": "git_log",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "path_traversal",
+      "pattern_name": "Path Traversal",
+      "tool": "git_log",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "resource_exhaustion",
+      "pattern_name": "Resource Exhaustion",
+      "tool": "git_log",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "command_injection",
+      "pattern_name": "Command Injection",
+      "tool": "git_create_branch",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "error_leakage",
+      "pattern_name": "Error Information Leakage",
+      "tool": "git_create_branch",
+      "severity": "high",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "input_validation",
+      "pattern_name": "Input Validation",
+      "tool": "git_create_branch",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "path_traversal",
+      "pattern_name": "Path Traversal",
+      "tool": "git_create_branch",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "resource_exhaustion",
+      "pattern_name": "Resource Exhaustion",
+      "tool": "git_create_branch",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "sql_injection",
+      "pattern_name": "SQL Injection",
+      "tool": "git_create_branch",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "command_injection",
+      "pattern_name": "Command Injection",
+      "tool": "git_checkout",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "error_leakage",
+      "pattern_name": "Error Information Leakage",
+      "tool": "git_checkout",
+      "severity": "high",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "input_validation",
+      "pattern_name": "Input Validation",
+      "tool": "git_checkout",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "path_traversal",
+      "pattern_name": "Path Traversal",
+      "tool": "git_checkout",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "resource_exhaustion",
+      "pattern_name": "Resource Exhaustion",
+      "tool": "git_checkout",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "sql_injection",
+      "pattern_name": "SQL Injection",
+      "tool": "git_checkout",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "command_injection",
+      "pattern_name": "Command Injection",
+      "tool": "git_show",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "error_leakage",
+      "pattern_name": "Error Information Leakage",
+      "tool": "git_show",
+      "severity": "high",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "input_validation",
+      "pattern_name": "Input Validation",
+      "tool": "git_show",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "path_traversal",
+      "pattern_name": "Path Traversal",
+      "tool": "git_show",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "resource_exhaustion",
+      "pattern_name": "Resource Exhaustion",
+      "tool": "git_show",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "command_injection",
+      "pattern_name": "Command Injection",
+      "tool": "git_branch",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "error_leakage",
+      "pattern_name": "Error Information Leakage",
+      "tool": "git_branch",
+      "severity": "high",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "input_validation",
+      "pattern_name": "Input Validation",
+      "tool": "git_branch",
+      "severity": "medium",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "path_traversal",
+      "pattern_name": "Path Traversal",
+      "tool": "git_branch",
+      "severity": "critical",
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
+    },
+    {
+      "pattern": "resource_exhaustion",
+      "pattern_name": "Resource Exhaustion",
+      "tool": "git_branch",
       "severity": "medium",
       "status": "pass",
       "detail": "All payloads handled safely.",
@@ -655,9 +586,9 @@
     "broken": []
   },
   "score": {
-    "total": 65,
-    "passed": 53,
-    "failed": 12,
+    "total": 64,
+    "passed": 64,
+    "failed": 0,
     "warnings": 0,
     "critical_fails": 0
   }

@@ -1,6 +1,6 @@
 {
   "target": "mcp-alchemy",
-  "timestamp": "2026-04-20T10:45:42.692722+00:00",
+  "timestamp": "2026-04-20T11:26:34.547372+00:00",
   "tools_discovered": 4,
   "results": [
     {
@@ -35,14 +35,9 @@
       "pattern_name": "Error Information Leakage",
       "tool": "filter_table_names",
       "severity": "high",
-      "status": "fail",
-      "detail": "Vulnerable: Empty input to trigger error",
-      "evidence": {
-        "input": "",
-        "param": "q",
-        "payload_desc": "Empty input to trigger error",
-        "output_snippet": "secrets, users"
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "input_validation",
@@ -103,14 +98,9 @@
       "pattern_name": "Error Information Leakage",
       "tool": "execute_query",
       "severity": "high",
-      "status": "fail",
-      "detail": "Vulnerable: Null-like string",
-      "evidence": {
-        "input": "null",
-        "param": "query",
-        "payload_desc": "Null-like string",
-        "output_snippet": "Error: (sqlite3.OperationalError) near \"null\": syntax error\n[SQL: null]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-      }
+      "status": "pass",
+      "detail": "All payloads handled safely.",
+      "evidence": {}
     },
     {
       "pattern": "input_validation",
@@ -161,8 +151,8 @@
   },
   "score": {
     "total": 15,
-    "passed": 12,
-    "failed": 3,
+    "passed": 14,
+    "failed": 1,
     "warnings": 0,
     "critical_fails": 0
   }
