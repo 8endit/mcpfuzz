@@ -182,6 +182,85 @@ servers:
     notes: "Microsoft's document converter with MCP server"
 
   # ============================================================
+  # REAL SERVERS — Additional batch (claude/test-more-servers)
+  # ============================================================
+
+  - id: official-git-python
+    name: "mcp-server-git (official Anthropic)"
+    repo: https://github.com/modelcontextprotocol/servers
+    install: "pip install mcp-server-git"
+    command: "mcp-server-git --repository /target/testrepo"
+    copy_path: "src/git"
+    setup: "git config --system user.email t@t.com && git config --system user.name t && mkdir -p /target/testrepo && cd /target/testrepo && git init -q && echo hello > a.txt && git add a.txt && git commit -qm init"
+    category: git
+    type: reference
+    sdk: mcp_low
+    stars: 50000
+    notes: "Official Anthropic git MCP server — Python low-level SDK"
+
+  - id: official-fetch-python
+    name: "mcp-server-fetch (official Anthropic)"
+    repo: https://github.com/modelcontextprotocol/servers
+    install: "pip install mcp-server-fetch"
+    command: "mcp-server-fetch"
+    copy_path: "src/fetch"
+    category: fetch
+    type: reference
+    sdk: mcp_low
+    stars: 50000
+    notes: "Official Anthropic fetch MCP server — Python low-level SDK"
+
+  - id: mcp-alchemy
+    name: "mcp-alchemy (SQLAlchemy-backed)"
+    repo: https://github.com/runekaagaard/mcp-alchemy
+    install: "pip install mcp-alchemy"
+    command: "mcp-alchemy"
+    env:
+      DB_URL: "sqlite:////target/alchemy.db"
+    setup: "python3 -c \"import sqlite3; c=sqlite3.connect('/target/alchemy.db'); c.execute('CREATE TABLE users (id INTEGER, name TEXT, email TEXT)'); c.execute(\\\"INSERT INTO users VALUES (1,'Alice','a@b.com')\\\"); c.execute('CREATE TABLE secrets (id INTEGER, token TEXT)'); c.execute(\\\"INSERT INTO secrets VALUES (1,'SECRET123')\\\"); c.commit(); c.close()\""
+    category: database
+    type: real
+    sdk: mcp_fastmcp
+    stars: 300
+    notes: "SQLAlchemy-backed DB server — dynamic SQL generation"
+
+  - id: mcp-pandoc
+    name: "mcp-pandoc (document converter)"
+    repo: https://github.com/vivekVells/mcp-pandoc
+    install: "apt-get update && apt-get install -y --no-install-recommends pandoc && rm -rf /var/lib/apt/lists/* && pip install mcp-pandoc"
+    command: "mcp-pandoc"
+    category: search
+    type: real
+    sdk: mcp_low
+    stars: 200
+    notes: "Shells out to pandoc for document conversion — cmd injection candidate"
+
+  - id: office-word
+    name: "Office-Word-MCP-Server (GongRzhe)"
+    repo: https://github.com/GongRzhe/Office-Word-MCP-Server
+    install: "pip install office-word-mcp-server"
+    command: "word_mcp_server"
+    framing: newline
+    category: filesystem
+    type: real
+    sdk: fastmcp
+    stars: 1000
+    notes: "Local Word docx manipulation — standalone FastMCP 2.x"
+
+  - id: mark3labs-fs-go
+    name: "mcp-filesystem-server (mark3labs, Go)"
+    repo: https://github.com/mark3labs/mcp-filesystem-server
+    install: "apt-get update && apt-get install -y --no-install-recommends golang-go ca-certificates && rm -rf /var/lib/apt/lists/*"
+    command: "/usr/local/bin/mcp-fs-server /target/safe"
+    setup: "mkdir -p /target/safe && echo hello > /target/safe/a.txt && cd /target && GOCACHE=/tmp/go-cache GOMODCACHE=/tmp/go-mod go build -o /usr/local/bin/mcp-fs-server ."
+    framing: newline
+    category: filesystem
+    type: real
+    sdk: custom
+    stars: 500
+    notes: "Go implementation of filesystem MCP — different ecosystem"
+
+  # ============================================================
   # VALIDATION TARGETS (Intentionally vulnerable — not real findings)
   # ============================================================
 
