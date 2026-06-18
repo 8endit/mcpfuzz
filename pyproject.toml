@@ -28,3 +28,9 @@ mcpfuzz = "mcpfuzz.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.pytest.ini_options]
+# Put the repo root on sys.path so `tests.conftest` imports resolve when the
+# suite is run as plain `pytest tests/` (not only `python -m pytest`).
+pythonpath = ["."]
+testpaths = ["tests"]

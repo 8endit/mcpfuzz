@@ -96,6 +96,36 @@ class TestResponseEvaluation:
         payload = Payload(value="test")
         assert _evaluate_response("error: root: permission denied", pattern, payload) == "warn"
 
+    def test_echo_back_is_not_a_finding(self):
+        # A server that simply reflects our payload back ("Found 0 results
+        # for: <payload>") must NOT be flagged: the matched indicator is just
+        # our own input echoed, not evidence the server executed anything.
+        pattern = Pattern(
+            id="sql_injection", name="SQL Injection", severity="critical", description="",
+            detection=Detection(
+                response_contains_any=["sqlite_master", "CREATE TABLE"],
+                response_not_contains=["sanitized"],
+            ),
+        )
+        payload = Payload(value="x' UNION SELECT sql FROM sqlite_master--")
+        echoed = f"Found 0 results for: {payload.value}"
+        assert _evaluate_response(echoed, pattern, payload) == "pass"
+
+    def test_real_leak_still_detected_despite_echo(self):
+        # Genuine vulnerability: the response leaks schema (CREATE TABLE) that
+        # was NOT part of the payload — this must still fail even though another
+        # indicator (sqlite_master) only appears as reflected input.
+        pattern = Pattern(
+            id="sql_injection", name="SQL Injection", severity="critical", description="",
+            detection=Detection(
+                response_contains_any=["sqlite_master", "CREATE TABLE"],
+                response_not_contains=["sanitized"],
+            ),
+        )
+        payload = Payload(value="x' UNION SELECT sql FROM sqlite_master--")
+        leaked = "CREATE TABLE users (id INT, password TEXT)"
+        assert _evaluate_response(leaked, pattern, payload) == "fail"
+
 
 class TestExtractResponse:
     def test_extract_text_content(self):

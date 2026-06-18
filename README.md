@@ -8,6 +8,9 @@ Static scanners read tool descriptions. mcpfuzz connects, sends crafted inputs, 
 
 ## Install
 
+Requires **Python 3.11+**. If your system Python is older, create the venv with
+a newer interpreter (e.g. `uv venv -p 3.13` or `python3.11 -m venv .venv`).
+
 ```bash
 pip install -e .
 ```

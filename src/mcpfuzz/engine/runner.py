@@ -228,10 +228,18 @@ def _extract_response_text(resp: dict[str, Any]) -> str:
 def _evaluate_response(response_text: str, pattern: Pattern, payload: Payload) -> str:
     """Evaluate a response against detection criteria. Returns 'pass', 'fail', or 'warn'."""
     response_lower = response_text.lower()
+    payload_lower = (payload.value or "").lower()
 
-    # Check for positive detection indicators (signs of vulnerability)
+    # Echo-back guard: an indicator that is merely a reflection of the input we
+    # sent proves nothing. A tool that returns "Found 0 results for: <payload>"
+    # (or a stack trace that quotes our payload) is not vulnerable — it just
+    # echoes its argument. Only count indicators that appear in the response
+    # but are NOT a substring of the payload itself. Command-injection payloads
+    # deliberately use a split marker (MCPFUZZ""INJECTED) so the executed output
+    # (MCPFUZZINJECTED) is distinct from the reflected literal and survives this
+    # guard, while a plain echo of the input does not.
     has_vuln_indicator = any(
-        indicator.lower() in response_lower
+        indicator.lower() in response_lower and indicator.lower() not in payload_lower
         for indicator in pattern.detection.response_contains_any
     )
 

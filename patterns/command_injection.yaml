@@ -23,38 +23,43 @@ target_params:
     - "input"
   param_type: "string"
 
+# NOTE: payloads use a SPLIT marker (MCPFUZZ""INJECTED). A shell that
+# actually executes the command concatenates the empty "" and emits the
+# canonical marker MCPFUZZINJECTED. A server that merely echoes the input
+# back returns the literal MCPFUZZ""INJECTED (with quotes), which does NOT
+# contain the canonical marker — so reflection no longer triggers a finding.
 payloads:
-  - value: "echo hello; echo MCPFUZZ_INJECT_MARKER"
+  - value: 'echo hello; echo MCPFUZZ""INJECTED'
     description: "Semicolon injection with marker"
     platform: "any"
-  - value: "echo hello && echo MCPFUZZ_INJECT_MARKER"
+  - value: 'echo hello && echo MCPFUZZ""INJECTED'
     description: "AND injection with marker"
     platform: "any"
-  - value: "echo hello | echo MCPFUZZ_INJECT_MARKER"
+  - value: 'echo hello | echo MCPFUZZ""INJECTED'
     description: "Pipe injection with marker"
     platform: "any"
-  - value: "echo $(echo MCPFUZZ_INJECT_MARKER)"
+  - value: 'echo $(echo MCPFUZZ""INJECTED)'
     description: "Command substitution injection"
     platform: "unix"
-  - value: "echo `echo MCPFUZZ_INJECT_MARKER`"
+  - value: 'echo `echo MCPFUZZ""INJECTED`'
     description: "Backtick injection"
     platform: "unix"
-  - value: "/tmp/safe/test.txt; echo MCPFUZZ_INJECT_MARKER"
+  - value: '/tmp/safe/test.txt; echo MCPFUZZ""INJECTED'
     description: "Path with semicolon injection"
     platform: "unix"
-  - value: "/tmp/test.txt && echo MCPFUZZ_INJECT_MARKER"
+  - value: '/tmp/test.txt && echo MCPFUZZ""INJECTED'
     description: "Path with AND injection"
     platform: "unix"
-  - value: "test.txt$(echo MCPFUZZ_INJECT_MARKER)"
+  - value: 'test.txt$(echo MCPFUZZ""INJECTED)'
     description: "Filename with command substitution"
     platform: "unix"
-  - value: "test.txt|echo MCPFUZZ_INJECT_MARKER"
+  - value: 'test.txt|echo MCPFUZZ""INJECTED'
     description: "Filename with pipe injection"
     platform: "any"
 
 detection:
   response_contains_any:
-    - "MCPFUZZ_INJECT_MARKER"
+    - "MCPFUZZINJECTED"
   response_not_contains:
     - "not allowed"
     - "invalid"
